@@ -23,6 +23,14 @@ jobs:
       with:
         node-version: '18'
 
+    - name: Create www folder & Ensure index.html exists
+      run: |
+        mkdir -p www
+        find . -name "index.html" -not -path "./www/*" -not -path "./android/*" -exec cp {} www/ \; 2>/dev/null || true
+        if [ ! -f www/index.html ]; then
+          echo "<!DOCTYPE html><html><head><title>RBIC App</title></head><body><h1>RBIC App</h1></body></html>" > www/index.html
+        fi
+
     - name: Install Dependencies & Capacitor
       run: |
         npm install
