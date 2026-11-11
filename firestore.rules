@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function loginId() { return request.auth.token.email.split('@')[0].upper(); }
+    function isAdmin() { return signedIn() && loginId().matches('ADMIN[A-Z0-9_-]*'); }
+    function isTeacher() {
+      return signedIn() && !isAdmin() &&
+        exists(/databases/$(database)/documents/schools/rambharose-inter-college/teachers/$(loginId()));
+    }
+    function isStudent() {
+      return signedIn() && !isAdmin() && !isTeacher() &&
+        exists(/databases/$(database)/documents/schools/rambharose-inter-college/students/$(loginId()));
+    }
+    function staff() { return isAdmin() || isTeacher(); }
+
+    match /schools/rambharose-inter-college {
+      allow read: if signedIn();
+      allow write: if staff();
+    }
+
+match /schools/rambharose-inter-college/students/{studentId} {
+      allow get: if staff() || (isStudent() && studentId == loginId());
+      allow list: if staff();
+      allow create, delete: if staff();
+      allow update: if staff() || (isStudent() && studentId == loginId());
+    }
+  match /schools/rambharose-inter-college/teachers/{teacherId} {
+      allow get: if isAdmin() || (isTeacher() && teacherId == loginId());
+      allow list: if isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || (isTeacher() && teacherId == loginId());
+    }
+
+    match /schools/rambharose-inter-college/notices/{noticeId} {
+      allow read: if signedIn();
+      allow create, update, delete: if staff();
+    }
+
+    match /schools/rambharose-inter-college/exams/{examId} {
+      allow read: if signedIn();
+      allow create, update, delete: if staff();
+    }
+
+    match /schools/rambharose-inter-college/marks/{markId} {
+      allow get, list: if staff() || (isStudent() && resource.data.studentId == loginId());
+      allow create, update, delete: if staff();
+    }
+
+    match /schools/rambharose-inter-college/attendance/{attendanceId} {
+      allow get, list: if staff() || (isStudent() && resource.data.studentId == loginId());
+      allow create, update, delete: if staff();
+    }
+
+    match /schools/rambharose-inter-college/_meta/{metaId} {
+      allow read: if staff();
+      allow write: if staff();
+    }
+
+
+    match /schools/rambharose-inter-college/fcmTokens/{tokenOwner} {
+      allow get, create, update: if signedIn() && (staff() || tokenOwner == loginId());
+      allow list: if staff();
+      allow delete: if signedIn() && (staff() || tokenOwner == loginId());
+    }
+
+    match /schools/rambharose-inter-college/notifications/{notificationId} {
+      allow create, update, delete: if staff();
+      allow get: if staff() ||
+        (isStudent() && (
+          resource.data.targetAudience == 'all' ||
+          resource.data.targetLoginId == loginId() ||
+          (resource.data.targetAudience == 'class' &&
+           resource.data.class == get(/databases/$(database)/documents/schools/rambharose-inter-college/students/$(loginId())).data.class &&
+           resource.data.section == get(/databases/$(database)/documents/schools/rambharose-inter-college/students/$(loginId())).data.section)
+        ));
+      allow list: if staff();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
