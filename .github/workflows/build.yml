@@ -1,65 +1,122 @@
 
-name: Build Android APK
+name: Build RBIC Android APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
+    name: Build Android APK
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      # 1. Download Repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        distribution: temurin
-        java-version: '17'
+      # 2. Java Setup
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+      # 3. Node Setup
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Create www folder
-      run: |
-        mkdir -p www
-        find . -name "index.html" -not -path "./www/*" -not -path "./android/*" -exec cp {} www/ \; 2>/dev/null || true
-        if [ ! -f www/index.html ]; then
-          echo "<!DOCTYPE html><html><head><title>RBIC App</title></head><body><h1>RBIC App</h1></body></html>" > www/index.html
-        fi
+      # 4. Check Project Files
+      - name: Check Project
+        run: |
+          echo "Checking RBICAPP files..."
+          ls -la
+          node --version
+          java -version
 
-    - name: Install Dependencies & Capacitor
-      run: |
-        npm install
-        npm install --save-dev @capacitor/cli @capacitor/core
+      # 5. Install Node Dependencies
+      - name: Install Dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-    - name: Add Android Platform Automatically
-      run: |
-        if [ ! -d "android" ]; then
-          npm install --save @capacitor/android
-          npx cap add android
-        fi
-        npx cap sync android
+      # 6. Install Capacitor
+      - name: Setup Capacitor
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          
+      # 7. Ensure Web Folder
+      - name: Prepare Web Assets
+        run: |
+          mkdir -p www
 
-    - name: Clean Gradle Cache
-      run: |
-        rm -rf ~/.gradle/caches
-        rm -rf ~/.gradle/daemon
-        rm -rf android/.gradle
+          if [ ! -f www/index.html ]; then
+            echo "Checking website files..."
 
-    - name: Build Android APK
-      working-directory: android
-      run: |
-        chmod +x gradlew
-        ./gradlew clean assembleDebug --no-daemon --refresh-dependencies
+            if [ -f index.html ]; then
+              cp index.html www/index.html
+            else
+              echo "ERROR: Original index.html not found!"
+              exit 1
+            fi
+          fi
 
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: RBIC-Debug-APK
-        path: android/app/build/outputs/apk/debug/app-debug.apk
-        if-no-files-found: error
+      # 8. Check Capacitor Config
+      - name: Check Capacitor Configuration
+        run: |
+          if [ ! -f capacitor.config.ts ] && \
+             [ ! -f capacitor.config.json ] && \
+             [ ! -f capacitor.config.js ]; then
+            echo "ERROR: Capacitor config file missing!"
+            exit 1
+          fi
+
+      # 9. Android Platform
+      - name: Setup Android Platform
+        run: |
+          if [ ! -d android ]; then
+            npx cap add android
+          fi
+
+          npx cap sync android
+
+      # 10. Clean Gradle Cache
+      - name: Clean Gradle Cache
+        run: |
+          rm -rf ~/.gradle/caches
+          rm -rf ~/.gradle/daemon
+          rm -rf android/.gradle
+
+      # 11. Build APK
+      - name: Build Android APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+
+          ./gradlew clean assembleDebug \
+            --no-daemon \
+            --refresh-dependencies \
+            --max-workers=2 \
+            --stacktrace \
+            -Dorg.gradle.internal.instrumentation.agent=false
+
+      # 12. Upload APK
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RBICAPP-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
