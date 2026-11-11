@@ -98,13 +98,7 @@ jobs:
         working-directory: android
         run: |
           chmod +x gradlew
-
-          ./gradlew clean assembleDebug \
-            --no-daemon \
-            --refresh-dependencies \
-            --max-workers=2 \
-            --stacktrace \
-            -Dorg.gradle.internal.instrumentation.agent=false
+          ./gradlew assembleDebug --no-daemon
 
       # 12. Upload APK
       - name: Upload APK Artifact
