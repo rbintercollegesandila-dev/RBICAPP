@@ -35,6 +35,13 @@ jobs:
       run: |
         npm install
         npm install --save-dev @capacitor/cli @capacitor/core @capacitor/android
+
+    - name: Add Android Platform Automatically
+      run: |
+        if [ ! -d "android" ]; then
+          npx cap init RBICAPP com.rbic.app --web-dir www --yes
+          npx cap add android
+        fi
         npx cap sync
 
     - name: Build Android APK
