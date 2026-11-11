@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1043303752475",
+    "project_id": "rambharose-inter-college",
+    "storage_bucket": "rambharose-inter-college.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043303752475:android:a9780fb649e7ea353ae9be",
+        "android_client_info": {
+          "package_name": "in.rbic.school"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAklnv3YvmJLi9QU4iOmFvmnIzsyxvsnpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
