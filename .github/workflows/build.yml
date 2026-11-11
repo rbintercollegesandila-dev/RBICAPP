@@ -77,12 +77,23 @@ jobs:
             echo '{"appId": "com.rbic.app", "appName": "RBICAPP", "webDir": "www"}' > capacitor.config.json
           fi
 
-      # 9. Android Platform
+      # 9. Android Platform & Fix Dependency Conflict
       - name: Setup Android Platform
         run: |
           if [ ! -d android ]; then
             npx cap add android
           fi
+
+          # Force stable BouncyCastle version to bypass jar creation bug
+          echo "
+          allprojects {
+              configurations.all {
+                  resolutionStrategy {
+                      force 'org.bouncycastle:bcprov-jdk18on:1.77'
+                  }
+              }
+          }
+          " >> android/build.gradle
 
           npx cap sync android
 
@@ -92,7 +103,6 @@ jobs:
           rm -rf ~/.gradle/caches
           rm -rf ~/.gradle/daemon
           rm -rf android/.gradle
-          find ~/.gradle -name "*bcprov*" -exec rm -rf {} + || true
 
       # 11. Build APK
       - name: Build Android APK
