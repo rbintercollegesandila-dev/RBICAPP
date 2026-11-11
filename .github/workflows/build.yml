@@ -34,7 +34,7 @@ jobs:
     - name: Install Dependencies & Capacitor
       run: |
         npm install
-        npm install --save-dev @capacitor/cli @capacitor/core @capacitor/android
+        npm install --save-dev @capacitor/cli @capacitor/core
 
     - name: Add Android Platform Automatically
       run: |
@@ -44,11 +44,12 @@ jobs:
         fi
         npx cap sync
 
-    - name: Build Android APK
+    - name: Clean Gradle Cache & Build APK
       run: |
         cd android
+        rm -rf ~/.gradle/caches/
         chmod +x gradlew
-        ./gradlew assembleDebug
+        ./gradlew clean assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
