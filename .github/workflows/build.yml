@@ -84,7 +84,9 @@ jobs:
             npx cap add android
           fi
 
-          # Force stable BouncyCastle version to bypass jar creation bug
+          npx cap sync android
+
+          # Force stable BouncyCastle version to bypass jar creation bug (applied after sync)
           echo "
           allprojects {
               configurations.all {
@@ -94,8 +96,6 @@ jobs:
               }
           }
           " >> android/build.gradle
-
-          npx cap sync android
 
       # 10. Clean Gradle Cache
       - name: Clean Gradle Cache
