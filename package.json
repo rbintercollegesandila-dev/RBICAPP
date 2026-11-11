@@ -1,26 +1,17 @@
+
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "rbicapp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RBICAPP Android Application",
   "scripts": {
-    "lint": "eslint .",
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "android:sync": "cap sync android"
   },
-  "engines": {
-    "node": "22"
-  },
-  "main": "index.js",
   "dependencies": {
-    "firebase-admin": "^13.6.0",
-    "firebase-functions": "^7.0.0"
+    "@capacitor/android": "8.6.0",
+    "@capacitor/core": "8.6.0"
   },
   "devDependencies": {
-    "eslint": "^8.15.0",
-    "eslint-config-google": "^0.14.0",
-    "firebase-functions-test": "^3.4.1"
-  },
-  "private": true
+    "@capacitor/cli": "8.6.0"
+  }
 }
