@@ -23,9 +23,10 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install Dependencies & Build Web Assets
+    - name: Install Dependencies & Capacitor
       run: |
         npm install
+        npm install --save-dev @capacitor/cli @capacitor/core @capacitor/android
         npx cap sync
 
     - name: Build Android APK
