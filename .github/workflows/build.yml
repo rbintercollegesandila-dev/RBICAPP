@@ -39,7 +39,7 @@ jobs:
     - name: Add Android Platform Automatically
       run: |
         if [ ! -d "android" ]; then
-          npx cap init RBICAPP com.rbic.app --web-dir www --yes
+          npm install --save @capacitor/android
           npx cap add android
         fi
         npx cap sync
