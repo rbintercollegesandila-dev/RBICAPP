@@ -1,0 +1,3196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#153e8a">
+<title>Rambharose Inter College — School Management</title>
+<link rel="manifest" href="/manifest.json">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+:root{
+ --blue:#173f8a;--blue2:#2457b5;--ink:#172033;--muted:#6c7890;--bg:#f4f7fb;--card:#fff;
+ --line:#e4e9f2;--green:#14966b;--orange:#ed8b24;--red:#d95362;--shadow:0 8px 28px rgba(25,52,94,.08)
+}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{min-height:100vh;display:flex}.sidebar{width:252px;background:#102f6d;color:#fff;position:fixed;inset:0 auto 0 0;padding:22px 14px;z-index:30;display:flex;flex-direction:column}
+.brand{display:flex;gap:11px;align-items:center;padding:4px 10px 22px}.logo{width:44px;height:44px;border-radius:13px;background:#fff;color:var(--blue);display:grid;place-items:center;font-weight:950;font-size:17px;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.brand strong{display:block;font-size:15px}.brand small{opacity:.7;font-size:11px}.role{font-size:10px;letter-spacing:1px;font-weight:800;padding:7px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(255,255,255,.08);margin:0 8px 16px}
+.nav{overflow:auto}.nav button{width:100%;border:0;background:transparent;color:#dce6fb;text-align:left;padding:11px 12px;border-radius:11px;margin:2px 0;display:flex;gap:11px;align-items:center;font-weight:650;font-size:13px}.nav button:hover,.nav button.active{background:rgba(255,255,255,.13);color:#fff}.nav .ico{width:22px;text-align:center}.side-foot{margin-top:auto;font-size:10px;line-height:1.6;color:#b7c6e5;padding:14px 10px}
+.main{margin-left:252px;min-height:100vh;width:calc(100% - 252px)}.top{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:20}.title small{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1.2px}.title h1{margin:3px 0 0;font-size:22px}.topright{display:flex;align-items:center;gap:8px}.icon{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:11px;position:relative}.badge{position:absolute;right:6px;top:6px;width:6px;height:6px;background:#e84f61;border-radius:50%}.avatar{width:40px;height:40px;border-radius:12px;background:#eaf0ff;color:var(--blue);display:grid;place-items:center;font-size:12px;font-weight:900}.menu{display:none}
+.content{padding:25px 28px 42px;max-width:1450px;margin:auto}.hero{background:linear-gradient(120deg,#173f8a,#2b61bd);color:#fff;border-radius:18px;padding:24px;display:flex;justify-content:space-between;gap:18px;align-items:center;box-shadow:0 12px 32px rgba(23,63,138,.18)}.hero h2{margin:0 0 5px;font-size:22px}.hero p{margin:0;color:#dce8ff;font-size:13px}.hero-mark{width:64px;height:64px;border-radius:18px;background:#fff;color:var(--blue);display:grid;place-items:center;font-weight:950;font-size:21px}
+.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,1fr);margin:18px 0}
+.stats-5{grid-template-columns:repeat(5,1fr);margin:18px 0}.two{grid-template-columns:1.2fr .8fr}.three{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}.stat{padding:17px}.stat .label{font-size:10px;font-weight:850;letter-spacing:.7px;color:var(--muted)}.stat .num{font-size:25px;font-weight:900;margin:7px 0}.hint{font-size:11px;color:var(--muted)}.hint.warn{color:var(--orange)}
+.section{margin-top:18px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}.section-head h2{font-size:15px;margin:0}.section-head p{margin:4px 0 0;color:var(--muted);font-size:11px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:0;border-radius:10px;padding:10px 13px;background:var(--blue);color:#fff;font-weight:750;font-size:12px;display:inline-flex;align-items:center;justify-content:center}.btn:hover{background:var(--blue2)}.btn.secondary{background:#eef3ff;color:var(--blue)}.btn.green{background:#e9f8f2;color:#087552}.btn.red{background:#fff0f1;color:#bb3d4d}.btn.gray{background:#f1f3f7;color:#445067}
+.search{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;min-width:180px;outline:none}.search:focus,.field input:focus,.field select:focus,.field textarea:focus{border-color:#7e9de2;box-shadow:0 0 0 3px #edf2ff}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{border:1px solid var(--line);background:#fff;border-radius:13px;padding:15px;text-align:left}.quick span{font-size:20px;display:block;margin-bottom:8px}.quick b{font-size:12px}
+.notice{padding:12px 0;border-bottom:1px solid var(--line)}.notice:last-child{border-bottom:0}.notice strong{font-size:12px}.notice p{margin:5px 0;color:var(--muted);font-size:11px;line-height:1.5}.tag{display:inline-flex;padding:4px 7px;border-radius:999px;background:#edf2ff;color:var(--blue);font-size:9px;font-weight:800}.tag.green{background:#e9f8f2;color:#087552}.tag.red{background:#fff0f1;color:#bb3d4d}.mini{font-size:10px;color:var(--muted)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:700px;background:#fff}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:11px;vertical-align:middle}th{background:#f8faff;color:#66738b;font-size:9px;letter-spacing:.6px;text-transform:uppercase}tr:last-child td{border-bottom:0}
+.progress{height:7px;border-radius:99px;background:#e9edf4;overflow:hidden}.progress i{display:block;height:100%;background:var(--blue);border-radius:99px}.metric{display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px}
+.field{margin-bottom:12px}.field label{display:block;font-size:9px;font-weight:850;color:#68758d;letter-spacing:.6px;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;outline:none;background:#fff;color:var(--ink)}.field textarea{min-height:105px;resize:vertical}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 12px}
+.empty{padding:35px 15px;text-align:center;color:var(--muted);font-size:12px}.actions{display:flex;gap:6px;flex-wrap:wrap}.amount{font-weight:900}.paid{color:var(--green)}.pending{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(12,25,48,.55);display:grid;place-items:center;padding:16px;z-index:10000}.modal.hidden{display:none}.modalbox{width:min(740px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.25)}.modalhead{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:16px}.modalhead h3{margin:0;font-size:17px}.close{border:0;background:#f1f3f7;width:34px;height:34px;border-radius:9px;font-size:20px}.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#172033;color:#fff;padding:11px 15px;border-radius:11px;font-size:11px;opacity:0;pointer-events:none;transition:.2s;z-index:20000;box-shadow:0 10px 30px rgba(0,0,0,.2)}#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Subtabs */
+.subtabs{display:flex;gap:8px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.subtab{border:0;background:transparent;padding:8px 14px;border-radius:9px;font-size:12px;font-weight:750;color:var(--muted)}
+.subtab.active{background:#eef3ff;color:var(--blue)}
+
+/* Attendance Matrix Indicators */
+.att-p{background:#e9f8f2;color:#087552;font-weight:900;text-align:center;border-radius:4px;padding:3px 5px;display:inline-block;min-width:20px}
+.att-a{background:#fff0f1;color:#bb3d4d;font-weight:900;text-align:center;border-radius:4px;padding:3px 5px;display:inline-block;min-width:20px}
+.att-blank{color:#ccc;text-align:center}
+
+@media(max-width:900px){.sidebar{width:235px}.main{margin-left:235px;width:calc(100% - 235px)}.stats-5{grid-template-columns:repeat(2,1fr)}.quick{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+ .sidebar{transform:translateX(-100%);transition:.22s;width:270px;box-shadow:20px 0 40px rgba(0,0,0,.2)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.menu{display:block;margin-right:10px}.top{padding:0 14px;height:68px}.title h1{font-size:19px}.content{padding:14px 12px 32px}.stats{gap:10px;margin:12px 0}.stat{padding:13px}.stat .num{font-size:20px}.two,.three{grid-template-columns:1fr}.hero{padding:18px}.hero h2{font-size:18px}.hero-mark{width:52px;height:52px}.search{min-width:0;flex:1;width:100%}.section-head{align-items:flex-start;flex-wrap:wrap}.toolbar{width:100%}.toolbar .btn,.toolbar .search{flex:1}.formgrid{grid-template-columns:1fr}.card{padding:14px}.topright .icon{width:36px;height:36px}.avatar{width:36px;height:36px}
+}
+
+/* Login Card & Tabs */
+#rbicLogin{position:fixed;inset:0;background:linear-gradient(135deg,#102f6d,#2457b5);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999}
+#rbicLogin.hidden{display:none}
+.rbic-login-card{width:min(440px,100%);background:#fff;border-radius:22px;padding:30px;box-shadow:0 25px 80px rgba(0,0,0,.28)}
+.rbic-login-logo{width:96px;height:96px;border-radius:20px;background:transparent;display:grid;place-items:center;margin:0 auto 14px}
+.rbic-login-card h2{text-align:center;margin:0;color:#172033;font-size:22px}
+.rbic-login-card .sub{text-align:center;color:#6c7890;font-size:12px;margin:6px 0 16px}
+.role-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#f1f4f9;padding:4px;border-radius:12px;margin-bottom:18px}
+.role-tab{border:0;background:transparent;padding:9px 4px;border-radius:9px;font-size:11px;font-weight:800;color:#55637d;transition:.2s;text-align:center}
+.role-tab.active{background:#fff;color:var(--blue);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.rbic-login-card label{display:block;font-size:10px;font-weight:850;color:#68758d;letter-spacing:.7px;margin:0 0 6px}
+.rbic-login-card input{display:block !important;visibility:visible !important;opacity:1 !important;width:100% !important;height:48px !important;box-sizing:border-box !important;padding:13px 12px !important;border:1px solid #e4e9f2 !important;border-radius:11px !important;outline:none !important;margin:0 0 14px !important;background:#fff !important;color:#172033 !important;font-size:14px !important}
+.rbic-login-card input:focus{border-color:#7e9de2;box-shadow:0 0 0 3px #edf2ff}
+.rbic-login-card button[type="submit"]{width:100%;border:0;border-radius:11px;padding:13px;background:#173f8a;color:#fff;font-weight:800;font-size:13px}
+.rbic-login-card button[type="submit"]:hover{background:#2457b5}
+#rbicLoginStatus{min-height:18px;text-align:center;color:#d95362;font-size:11px;margin-top:10px}
+.rbic-login-note{text-align:center;color:#8a94a6;font-size:10px;margin-top:13px}
+</style>
+</head>
+<body>
+<div id="rbicLogin">
+  <div class="rbic-login-card">
+    <div class="rbic-login-logo" style="overflow:hidden; background:#fff; padding:4px;">
+  <img src="/logo.png" alt="RBIC Logo" style="width:100%; height:100%; object-fit:contain; border-radius:14px;">
+</div>
+    <h2>RAMBHAROSE INTER COLLEGE</h2>
+    <div class="sub">तमसो मा ज्योतिर्गमय</div>
+    <div class="sub">Select your portal to continue</div>
+    
+    <div class="role-tabs">
+      <button type="button" class="role-tab active" id="tabStudent" onclick="setLoginRole('student')">👨‍🎓 Student</button>
+      <button type="button" class="role-tab" id="tabTeacher" onclick="setLoginRole('teacher')">👨‍🏫 Teacher</button>
+      <button type="button" class="role-tab" id="tabAdmin" onclick="setLoginRole('admin')">🛡️ Admin</button>
+    </div>
+
+    <form id="rbicLoginForm">
+      <label for="rbicLoginId" id="rbicLoginIdLabel">STUDENT LOGIN ID.</label>
+      <input id="rbicLoginId" type="text" autocomplete="username" placeholder="Enter Registration / ID (e.g. RB10A001)" required>
+      <label for="rbicLoginPassword">PASSWORD</label>
+      <input id="rbicLoginPassword" type="password" autocomplete="current-password" placeholder="Enter Password (Mobile No. / 123456)" required>
+      <button type="submit" id="rbicLoginSubmitBtn">Sign In as Student</button>
+      <div id="rbicLoginStatus"></div>
+    </form>
+    <div class="rbic-login-note" id="rbicLoginHelpNote">Default password for students is their registered Mobile Number.</div>
+  </div>
+</div>
+
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo" style="overflow:hidden; background:#fff; padding:3px;"><img src="/logo.png" alt="RBIC" style="width:100%; height:100%; object-fit:contain; border-radius:10px;"></div><div><strong>Rambharose</strong><small>Inter College</small></div></div>
+  <div class="role" id="sidebarRoleBadge">ADMIN • SCHOOL MANAGEMENT</div>
+  <nav class="nav" id="nav"></nav>
+  <div class="side-foot">SECURE CLOUD SYNC ACTIVE<br>Automated backups & push notifications.</div>
+</aside>
+<main class="main">
+  <header class="top">
+    <div style="display:flex;align-items:center">
+      <button class="icon menu" onclick="toggleSide()">☰</button>
+      <div class="title"><small>RAMBHAROSE INTER COLLEGE, SAMADKHEDA MEETON</small><h1 id="pageTitle">Dashboard</h1></div>
+    </div>
+    <div class="topright">
+      <button class="btn secondary" style="padding:6px 10px; font-size:11px;" onclick="changePasswordModal()">🔑 Password</button>
+      <button class="icon" title="Notifications" onclick="showPage('notifications')">🔔<i class="badge"></i></button>
+      <button class="btn red" style="padding:6px 10px; font-size:11px;" onclick="rbicLogout()">Logout</button>
+      <div class="avatar" id="userAvatarBadge">AD</div>
+    </div>
+  </header>
+  <section class="content" id="content"></section>
+</main>
+</div>
+
+<div id="modal" class="modal hidden"><div class="modalbox" id="modalbox"></div></div>
+<div id="toast"></div>
+
+<!-- Notification Permission Prompt -->
+<div id="notifPromptModal" class="modal hidden">
+  <div class="modalbox" style="max-width:380px; text-align:center; padding:25px;">
+    <div style="font-size:44px; margin-bottom:10px;">🔔</div>
+    <h3 style="margin:0 0 8px; font-size:18px;">School Notifications</h3>
+    <p style="color:var(--muted); font-size:12px; line-height:1.5; margin-bottom:20px;">
+      Chhutti, fees, exams aur zaroori notice ke updates turant mobile ke notification bar mein paane ke liye permission allow karein.
+    </p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button class="btn gray" style="flex:1;" onclick="closeNotifPrompt()">Baad Mein</button>
+      <button class="btn" style="flex:1;" onclick="acceptNotifPrompt()">Allow Karein</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
+
+<script>
+window.RB_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCSL9uPz5x52452JEvakeKZ55Qgvfryj24",
+  authDomain: "rambharose-inter-college.firebaseapp.com",
+  projectId: "rambharose-inter-college",
+  storageBucket: "rambharose-inter-college.firebasestorage.app",
+  messagingSenderId: "1043303752475",
+  appId: "1:1043303752475:web:20205c4b04faf93a3ae9be",
+  measurementId: "G-3JM03VZV9S"
+};
+window.RB_SCHOOL_ID = "rambharose-inter-college";
+window.RB_FCM_VAPID_KEY = "BI26qGKekemNe_8_ZI2R-OQ9ybZ62qVDM4o5F8d8cOlryoB8_Amn4c_Ycnhdm5CxW7rUXYrHP8EHuEBqj_IvKOI";
+
+
+if (window.firebase && window.RB_FIREBASE_CONFIG && !firebase.apps.length) {
+  firebase.initializeApp(window.RB_FIREBASE_CONFIG);
+}
+window.db = (window.firebase && firebase.firestore) ? firebase.firestore() : null;
+</script>
+
+<script>
+let currentRole = 'admin';
+let currentLoginId = '';
+let selectedLoginPortal = 'student';
+
+const RB_MONTHS = ['April','May','June','July','August','September','October','November','December','January','February','March'];
+
+const RBIC_ROLE_NAV = {
+  admin: [
+    ['dashboard','🏠','Dashboard'],['classes','🏫','Classes'],['students','👨‍🎓','Students'],['teachers','👨‍🏫','Teachers'],
+    ['fees','₹','Fees'],['attendance','✓','Attendance'],['exams','📝','Exams & Marks'],
+    ['bulksms','💬','Bulk SMS'],['notices','📢','Notices'],['notifications','🔔','Notifications'],['homework', '📚', 'Today Homework'],
+    ['excel','📊','Excel Import / Export'],['reports','📈','Reports'],['settings','⚙️','Settings']
+  ],
+  teacher: [
+    ['dashboard','🏠','Dashboard'],['classes','🏫','Classes'],['students','👨‍🎓','Students'],['teachers','👨‍🏫','Teachers'],
+    ['fees','₹','Fees'],['attendance','✓','Attendance'],['exams','📝','Exams & Marks'],
+    ['bulksms','💬','Bulk SMS'],['notices','📢','Notices'],['notifications','🔔','Notifications'],['homework', '📚', 'Today Homework'],
+    ['excel','📊','Excel Import / Export'],['reports','📈','Reports']
+  ],
+  student: [
+    ['dashboard','🏠','Dashboard'],['profile','👤','My Profile'],['fees','₹','My Fees'],
+    ['attendance','✓','My Attendance'],['exams','📝','My Marks'],['homework', '📚', 'Today Homework'],['notifications','🔔','Notifications']
+  ]
+};
+/* CENTRAL CLOUD STATE: Firestore is the only persistent school-data store. */
+let classesList=['6-A','7-A','8-A','9-A','9-B','10-A','10-B','11-A','12-A'];
+let students=[];
+let teachers=[];
+let notices=[];
+let exams=[];
+let marks={};
+let attendance={};
+let school={name:'RAMBHAROSE INTER COLLEGE, SAMADKHEDA MEETON',admin:'School Administrator'};
+
+async function persist(){
+  if(window.RBCloud && typeof window.RBCloud.save==='function') return window.RBCloud.save();
+  return Promise.resolve();
+}
+function cacheLocal(){}
+
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN')}
+function val(id){return document.getElementById(id)?.value||''}
+function toast(s){let t=document.getElementById('toast');t.textContent=s;t.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove('show'),2200)}
+function openModal(body){document.getElementById('modalbox').innerHTML=body;document.getElementById('modal').classList.remove('hidden')}
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+function toggleSide(){document.getElementById('sidebar').classList.toggle('open')}
+
+function getAllActiveClasses() {
+  let set = new Set(classesList);
+  students.forEach(s => { if(s.class) set.add(s.class + (s.section ? '-' + s.section : '-A')); });
+  return Array.from(set).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+}
+
+function rbicNav(){return RBIC_ROLE_NAV[currentRole] || RBIC_ROLE_NAV.student;}
+function bootNav(){
+  const items = rbicNav(); // Yeh currentRole ke hisaab se student menu uthayega
+  document.getElementById('nav').innerHTML = items.map(n => 
+    `<button data-page="${n[0]}" onclick="showPage('${n[0]}')"><span class="ico">${n[1]}</span>${n[2]}</button>`
+  ).join('');
+
+  const r = document.getElementById('sidebarRoleBadge');
+  if(r) r.textContent = (currentRole === 'admin' ? 'ADMIN • MANAGEMENT' : currentRole === 'teacher' ? 'TEACHER PORTAL' : 'STUDENT PORTAL');
+
+  const av = document.getElementById('userAvatarBadge');
+  if(av) av.textContent = (currentRole === 'student' ? 'ST' : (currentRole === 'teacher' ? 'TR' : 'AD'));
+}
+function allowedPage(p){return rbicNav().some(x=>x[0]===p)}
+
+function showPage(p){
+  if(!allowedPage(p)) p = 'dashboard';
+  location.hash = p;
+  document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === p));
+  const item = rbicNav().find(x=>x[0]===p) || rbicNav()[0];
+  document.getElementById('pageTitle').textContent = item[2];
+  if(innerWidth <= 700) document.getElementById('sidebar').classList.remove('open');
+
+  const pages = {
+    dashboard: currentRole === 'student' ? studentDashboard : dashboardPage,
+    classes: classesPage,
+    students: studentsPage,
+    teachers: teachersPage,
+    fees: currentRole === 'student' ? studentFeesPage : feesPage,
+    attendance: currentRole === 'student' ? studentAttendancePage : attendancePage,
+    exams: currentRole === 'student' ? studentMarksPage : examsPage,
+    bulksms: typeof bulkSmsPage === 'function' ? bulkSmsPage : dashboardPage,
+    notices: noticesPage,
+    notifications: notificationsPage,
+    homework: homeworkPage,
+    excel: excelPage,
+    reports: reportsPage,
+    settings: settingsPage,
+    profile: studentProfilePage
+  };
+  (pages[p] || pages.dashboard)();
+}
+
+function currentStudent(){
+  return students.find(s=>String(s.id).toUpperCase()===String(currentLoginId).toUpperCase())||null;
+}
+
+function renderNotifBanner() {
+  if (!('Notification' in window)) return '';
+  if (Notification.permission === 'granted') return '';
+  return `<div id="quickNotifBanner" style="background:#eaf2ff; border:1px solid #c5d9f8; border-radius:12px; padding:12px 16px; margin:14px 0; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+    <div style="font-size:12px; color:#173f8a;">
+      <b>🔔 Notifications Disabled</b><br>
+      Notice aur chhutti ke alerts pane ke liye turn on karein.
+    </div>
+    <button class="btn" style="padding:8px 14px; font-size:11px;" onclick="acceptNotifPrompt()">Turn ON</button>
+  </div>`;
+}
+
+/* ==================== ROLE SWITCHER ==================== */
+function setLoginRole(role){
+  selectedLoginPortal = role;
+  document.getElementById('tabStudent').classList.toggle('active', role === 'student');
+  document.getElementById('tabTeacher').classList.toggle('active', role === 'teacher');
+  document.getElementById('tabAdmin').classList.toggle('active', role === 'admin');
+
+  const idLabel = document.getElementById('rbicLoginIdLabel');
+  const idInput = document.getElementById('rbicLoginId');
+  const submitBtn = document.getElementById('rbicLoginSubmitBtn');
+  const helpNote = document.getElementById('rbicLoginHelpNote');
+
+  if(role === 'student'){
+    idLabel.textContent = 'STUDENT ADMISSION NO.';
+    idInput.placeholder = 'Enter Registration / ID (e.g. RB10A001)';
+    submitBtn.textContent = 'Sign In as Student';
+    helpNote.textContent = 'Default password for students is their registered Mobile Number.';
+  } else if(role === 'teacher'){
+    idLabel.textContent = 'TEACHER LOGIN ID';
+    idInput.placeholder = 'Enter Teacher ID (e.g. T101)';
+    submitBtn.textContent = 'Sign In as Teacher';
+    helpNote.textContent = 'Default password for teachers is 123456.';
+  } else {
+    idLabel.textContent = 'ADMIN LOGIN ID';
+    idInput.placeholder = 'Enter Admin ID (e.g. ADMIN)';
+    submitBtn.textContent = 'Sign In as Admin';
+    helpNote.textContent = 'Administrative credentials only.';
+  }
+  document.getElementById('rbicLoginStatus').textContent = '';
+}
+
+/* ==================== CHANGE PASSWORD MODULE ==================== */
+function changePasswordModal(){
+  openModal(`
+    <div class="modalhead"><h3>Change Password</h3><button class="close" onclick="closeModal()">×</button></div>
+    <form onsubmit="doChangePassword(event)">
+      <p class="mini" style="margin-bottom:12px;">Logged in user: <b>${esc(currentLoginId)}</b> (${currentRole.toUpperCase()})</p>
+      <div class="field">
+        <label>NEW PASSWORD</label>
+        <input id="newAuthPassword" type="password" minlength="6" placeholder="Enter new password (min 6 chars)" required>
+      </div>
+      <div class="field">
+        <label>CONFIRM NEW PASSWORD</label>
+        <input id="confirmAuthPassword" type="password" minlength="6" placeholder="Re-type new password" required>
+      </div>
+      <p class="mini" style="color:var(--orange);">
+        ${currentRole === 'student' ? 'Password change hone ke baad 123456 band ho jayega, par aapka Registered Mobile Number hamesha login ke liye kaam karega.' : 'Password change karne ke baad 123456 se login band ho jayega.'}
+      </p>
+      <div class="modalactions">
+        <button type="button" class="btn gray" onclick="closeModal()">Cancel</button>
+        <button class="btn">Update Password</button>
+      </div>
+    </form>
+  `);
+}
+
+async function doChangePassword(e){
+  e.preventDefault();
+  const np = val('newAuthPassword').trim();
+  const cp = val('confirmAuthPassword').trim();
+  if(np !== cp){ toast('❌ Passwords do not match'); return; }
+  if(np.length < 6){ toast('❌ Password must be at least 6 characters'); return; }
+
+  try{
+    const user = firebase.auth().currentUser;
+    if(!user){ toast('Login session expired. Please re-login.'); return; }
+
+    toast('Updating password...');
+
+    // 1. Firebase Auth Engine me password update
+    await user.updatePassword(np);
+
+    // 2. Database me passwordChanged mark karein
+    try {
+      const firestoreDb = window.db || firebase.firestore();
+      const col = (currentRole === 'teacher') ? 'teachers' : (currentRole === 'student' ? 'students' : null);
+      if(col && currentLoginId){
+        await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection(col).doc(currentLoginId).set({
+          passwordChanged: true,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+
+        if (currentRole === 'teacher') {
+          let t = teachers.find(x => String(x.id).toUpperCase() === currentLoginId);
+          if(t) t.passwordChanged = true;
+        } else if (currentRole === 'student') {
+          let s = students.find(x => String(x.id).toUpperCase() === currentLoginId);
+          if(s) s.passwordChanged = true;
+        }
+      }
+    } catch(dbErr) {
+      console.warn('Firestore flag update notice:', dbErr);
+    }
+
+    persist();
+    closeModal();
+    toast('✅ Password successfully changed!');
+  }catch(err){
+    console.error('Password change error:', err);
+    if(err.code === 'auth/requires-recent-login'){
+      toast('⚠️ Security: Pehle Logout karke dobara sign in karein, fir password badlein.');
+    } else {
+      toast('Update failed: ' + (err.message || 'Error').replace('Firebase:',''));
+    }
+  }
+}
+/* ==================== CLASS MANAGEMENT (EDIT & DELETE WITH CASCADE STUDENT DELETION) ==================== */
+function classesPage(){
+  const allCls = getAllActiveClasses();
+  const isAdminOrTeacher = (currentRole === 'admin' || currentRole === 'teacher');
+
+  document.getElementById('content').innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2 style="font-size:18px;margin:0">Class Management</h2>
+        <p>Classes add karein, edit karein ya delete karein.</p>
+      </div>
+      ${isAdminOrTeacher ? '<button class="btn" onclick="classForm()">+ Add New Class</button>' : ''}
+    </div>
+    <div class="grid three">
+      ${allCls.map(c => {
+        const cParts = c.split('-');
+        const clsStudents = students.filter(s => (s.class + '-' + (s.section||'A')) === c || (s.class === cParts[0] && s.section === cParts[1]));
+        const totalFee = clsStudents.reduce((a,s)=>a+s.fees,0);
+        const paidFee = clsStudents.reduce((a,s)=>a+s.paid,0);
+        return `
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h2 style="font-size:16px; margin:0;">Class ${esc(c)}</h2>
+              <span class="tag green">${clsStudents.length} Students</span>
+            </div>
+            <p class="mini" style="margin:8px 0;">
+              <b>Total Fees:</b> ${money(totalFee)}<br>
+              <b>Pending:</b> <span class="pending">${money(totalFee - paidFee)}</span>
+            </p>
+            <div class="actions" style="margin-top:14px; justify-content:space-between;">
+              <div>
+                <button class="btn secondary" style="padding:5px 8px; font-size:10px;" onclick="filterStudentByClass('${esc(c)}')">Students</button>
+                <button class="btn gray" style="padding:5px 8px; font-size:10px;" onclick="filterFeeByClass('${esc(c)}')">Fees</button>
+              </div>
+              ${isAdminOrTeacher ? `
+                <div>
+                  <button class="btn secondary" style="padding:5px 8px; font-size:10px;" onclick="classForm('${esc(c)}')">✏️ Edit</button>
+                  <button class="btn red" style="padding:5px 8px; font-size:10px;" onclick="deleteClass('${esc(c)}')">🗑️</button>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('') || '<div class="card empty">No classes created yet.</div>'}
+    </div>
+  `;
+}
+
+function classForm(existingClass = ''){
+  let cName = '';
+  let cSec = 'A';
+  if(existingClass){
+    const parts = existingClass.split('-');
+    cName = parts[0] || '';
+    cSec = parts[1] || 'A';
+  }
+
+  openModal(`
+    <div class="modalhead">
+      <h3>${existingClass ? 'Edit Class' : 'Add New Class'}</h3>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="saveClassData(event, '${esc(existingClass)}')">
+      <div class="formgrid">
+        <div class="field">
+          <label>CLASS NUMBER / NAME</label>
+          <input id="newClassName" value="${esc(cName)}" placeholder="e.g. 10, 11, 12, 6" required>
+        </div>
+        <div class="field">
+          <label>SECTION</label>
+          <input id="newClassSec" value="${esc(cSec)}" placeholder="e.g. A, B, Science" required>
+        </div>
+      </div>
+      <div class="modalactions">
+        <button type="button" class="btn gray" onclick="closeModal()">Cancel</button>
+        <button class="btn">${existingClass ? 'Update Class' : 'Create Class'}</button>
+      </div>
+    </form>
+  `);
+}
+
+async function saveClassData(e, oldClass){
+  e.preventDefault();
+  const cName = val('newClassName').trim();
+  const cSec = val('newClassSec').trim().toUpperCase();
+  const full = cName + '-' + cSec;
+
+  if(!cName || !cSec){
+    toast('Class aur Section dono zaroori hain!');
+    return;
+  }
+
+  try {
+    const firestoreDb = window.db || firebase.firestore();
+    let updatedList = [...classesList];
+
+    if(oldClass){
+      if (oldClass === full) {
+          closeModal();
+          return;
+      }
+      
+      if(updatedList.includes(full)){
+        toast('❌ Nayi class ka naam pehle se hi exist karta hai!');
+        return;
+      }
+      
+      // Sirf class list me naam update hoga, students safe rahenge
+      updatedList = updatedList.map(c => c === oldClass ? full : c);
+    } else {
+      if(updatedList.includes(full)){
+        toast('❌ Yeh class pehle se hi exist karti hai!');
+        return;
+      }
+      updatedList.push(full);
+    }
+
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('_meta').doc('classes').set({
+      list: updatedList,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge: true});
+
+    classesList = updatedList;
+    persist();
+    closeModal();
+    classesPage();
+    toast(oldClass ? `✅ Class updated to ${full}!` : `✅ Class ${full} added successfully!`);
+  } catch(err) {
+    console.error('Class save error:', err);
+    toast('Cloud save failed: ' + (err.message || 'Error'));
+  }
+}
+
+async function deleteClass(clsName){
+  if(!confirm(`⚠️ WARNING: Kya aap Class ${clsName} ko delete karna chahte hain?\n\nIse delete karte hi is class ke SAABHI STUDENTS (aur unka data) database se hamesha ke liye delete ho jayenge!`)) return;
+
+  try {
+    toast('Deleting class and associated students...');
+    const firestoreDb = window.db || firebase.firestore();
+    const batch = firestoreDb.batch();
+
+    const studentsInClass = students.filter(s => (s.class + '-' + (s.section || 'A')) === clsName || s.class === clsName);
+    
+    students = students.filter(s => !((s.class + '-' + (s.section || 'A')) === clsName || s.class === clsName));
+
+    studentsInClass.forEach(s => {
+        const studentRef = firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(s.id);
+        batch.delete(studentRef);
+    });
+
+    classesList = classesList.filter(c => c !== clsName);
+    const metaRef = firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('_meta').doc('classes');
+    batch.set(metaRef, {
+      list: classesList,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge: true});
+
+    await batch.commit();
+
+    persist();
+    classesPage();
+    toast(`✅ Class ${clsName} aur uske sabhi students delete ho gaye!`);
+  } catch(err) {
+    console.error('Delete class error:', err);
+    toast('Delete failed: ' + (err.message || 'Error'));
+  }
+}
+function filterStudentByClass(cls){
+  showPage('students');
+  setTimeout(()=>{
+    const sel = document.getElementById('classFilterSelect');
+    if(sel){ sel.value = cls; renderStudents(); }
+  }, 100);
+}
+
+function filterFeeByClass(cls){
+  showPage('fees');
+  setTimeout(()=>{
+    const sel = document.getElementById('feeClass');
+    if(sel){ sel.value = cls; renderFees(); }
+  }, 100);
+}
+
+/* ==================== DASHBOARD ==================== */
+function dashboardPage(){
+  let total=students.reduce((a,s)=>a+s.fees,0), paid=students.reduce((a,s)=>a+s.paid,0);
+  let overallAtt=students.length?Math.round(students.reduce((x,s)=>x+(s.att||0),0)/students.length):0;
+  
+  let displayName = '';
+  if (currentRole === 'teacher') {
+    const currentTeacher = teachers.find(t => String(t.id).toUpperCase() === String(currentLoginId).toUpperCase());
+    displayName = (currentTeacher && currentTeacher.name ? currentTeacher.name : 'Teacher') + ' Ji';
+  } else if (currentRole === 'admin') {
+    displayName = (school.admin || 'Admin') + ' Ji';
+  } else {
+    displayName = 'Student';
+  }
+
+  let statsHTML = '';
+  if(currentRole === 'admin'){
+    statsHTML = `
+      <div class="grid stats">
+        <div class="card stat"><div class="label">TOTAL STUDENTS</div><div class="num">${students.length}</div><div class="hint">Active records</div></div>
+        <div class="card stat"><div class="label">TEACHERS</div><div class="num">${teachers.length}</div><div class="hint">Staff directory</div></div>
+        <div class="card stat"><div class="label">FEES COLLECTED</div><div class="num">${money(paid)}</div><div class="hint paid">Recorded payments</div></div>
+        <div class="card stat"><div class="label">FEES PENDING</div><div class="num">${money(total-paid)}</div><div class="hint warn">Outstanding</div></div>
+      </div>
+    `;
+  } else {
+    statsHTML = `
+      <div class="grid stats">
+        <div class="card stat"><div class="label">TOTAL STUDENTS</div><div class="num">${students.length}</div><div class="hint">Enrolled students</div></div>
+        <div class="card stat"><div class="label">ACTIVE CLASSES</div><div class="num">${getAllActiveClasses().length}</div><div class="hint">Class divisions</div></div>
+        <div class="card stat"><div class="label">AVG ATTENDANCE</div><div class="num">${overallAtt}%</div><div class="hint paid">School score</div></div>
+        <div class="card stat"><div class="label">NOTICES</div><div class="num">${notices.length}</div><div class="hint">Active announcements</div></div>
+      </div>
+    `;
+  }
+
+  document.getElementById('content').innerHTML=`
+  <div class="hero">
+    <div>
+      <h2>Good morning, ${esc(displayName)} 👋</h2>
+      <p>${esc(school.name)} • Daily school management portal.</p>
+    </div>
+    <div class="hero-mark" style="overflow:hidden; background:#fff; padding:4px;"><img src="/logo.png" alt="RBIC" style="width:100%; height:100%; object-fit:contain; border-radius:14px;"></div>
+  </div>
+  ${renderNotifBanner()}
+  ${currentRole === 'teacher' ? renderDashboardRecentNotices() : ''}
+  ${statsHTML}
+  <div class="section card"><div class="section-head"><div><h2>Quick Actions</h2><p>Frequently used operations</p></div></div>
+  <div class="quick" style="grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));">
+    <button onclick="showPage('classes')"><span>🏫</span><b>Classes</b></button>
+    <button onclick="showPage('students')"><span>👨‍🎓</span><b>Manage Students</b></button>
+    <button onclick="showPage('fees')"><span>₹</span><b>Fees Management</b></button>
+    <button onclick="showPage('attendance')"><span>✓</span><b>Take Attendance</b></button>
+    <button onclick="showPage('bulksms')"><span>💬</span><b>Send Bulk SMS</b></button>
+  </div></div>
+  <div class="grid two section"><div class="card"><div class="section-head"><div><h2>Recent Notices</h2><p>Latest broadcast updates</p></div><button class="btn secondary" onclick="showPage('notices')">View all</button></div>${notices.slice(0,4).map(n=>`<div class="notice"><span class="tag">${esc(n.target)}</span><strong style="margin-left:6px">${esc(n.title)}</strong><p>${esc(n.body)}</p><span class="mini">${esc(n.date)}</span></div>`).join('')||'<div class="empty">No notices yet.</div>'}</div>
+  <div class="card"><div class="section-head"><div><h2>Class-wise Attendance</h2><p>Average summary</p></div></div>${getAllActiveClasses().slice(0,5).map(c=>{let a=students.filter(s=>s.class+'-'+s.section===c);let avg=a.length?Math.round(a.reduce((x,s)=>x+s.att,0)/a.length):0;return `<div style="margin:15px 0"><div class="metric"><span>Class ${c}</span><b>${avg}%</b></div><div class="progress"><i style="width:${avg}%"></i></div></div>`}).join('')||'<div class="empty">No classes</div>'}</div></div>`;
+}
+/* ==================== DASHBOARD RECENT NOTICES (NEW TO OLD) ==================== */
+function renderDashboardRecentNotices() {
+  if (!notices || !notices.length) {
+    return `<div style="padding:10px 14px; background:#fff; border-radius:12px; border:1px solid var(--line); margin:14px 0; font-size:12px; color:var(--muted);">
+      📢 Abhi koi nayi notification nahi hai.
+    </div>`;
+  }
+
+  const topNotices = [...notices].reverse().slice(0, 3);
+
+  return `
+    <div style="margin:14px 0; background:#fff; border:1px solid #cce0ff; border-radius:14px; box-shadow:var(--shadow); overflow:hidden;">
+      <div style="background:#f0f6ff; padding:10px 16px; border-bottom:1px solid #d5e6fb; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:var(--blue); display:flex; align-items:center; gap:6px;">
+          🔔 School Notice & Announcements (${topNotices.length})
+        </span>
+        <span class="tag green" style="font-size:9px;">Latest Updates</span>
+      </div>
+      <div style="padding:8px 16px;">
+        ${topNotices.map(n => `
+          <div style="padding:10px 0; border-bottom:1px dashed var(--line); display:flex; flex-direction:column; gap:3px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:8px;">
+              <b style="font-size:13px; color:var(--ink);">${esc(n.title)}</b>
+              <span class="mini" style="white-space:nowrap; color:var(--muted);">${esc(n.date || '')}</span>
+            </div>
+            <p style="margin:0; font-size:12px; color:#4a5568; line-height:1.4;">${esc(n.body)}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+/* STUDENT DASHBOARD */
+function studentDashboard(){
+  const s = currentStudent();
+  if(!s){document.getElementById('content').innerHTML='<div class="card"><h2>Student record not found</h2><p class="mini">Please contact the school administrator.</p></div>';return}
+  
+  const due = Math.max(0, (s.fees || 0) - (s.paid || 0));
+  const pm = s.paidMonths || [];
+
+  // Aaj ki date ke hisaab se live today attendance check karna
+  const todayDateStr = new Date().toISOString().slice(0,10);
+  const todayKey = todayDateStr + '_' + s.id;
+  const todayAttStatus = attendance[todayKey]; // 'P', 'A' ya undefined
+
+  // Real-time attendance percentage calculate karna logs ke hisaab se
+  const allStudentAttKeys = Object.keys(attendance).filter(k => k.endsWith('_' + s.id));
+  const totalPresentCount = allStudentAttKeys.filter(k => attendance[k] === 'P').length;
+  const attendancePct = allStudentAttKeys.length ? Math.round((totalPresentCount / allStudentAttKeys.length) * 100) : Number(s.att || 100);
+
+  // April se Current Month tak ki expected fees aur status
+  const nowMonthIdx = new Date().getMonth(); // 0 = Jan, 3 = Apr, 8 = Sep
+  const monthsCount = ((nowMonthIdx - 3 + 12) % 12) + 1;
+  const currentMonthName = RB_MONTHS[Math.min(monthsCount - 1, RB_MONTHS.length - 1)];
+  const mFee = Number(s.monthlyFee || (s.fees ? Math.round(s.fees / 12) : 0));
+  const targetTillNow = Math.min(s.fees, mFee * monthsCount);
+  const dueTillNow = Math.max(0, targetTillNow - (s.paid || 0));
+  const isMonthPaid = pm.includes(currentMonthName) || (dueTillNow === 0 && (s.paid || 0) >= targetTillNow);
+
+  document.getElementById('content').innerHTML=`<div class="hero"><div><h2>Welcome, ${esc(s.name)} 👋</h2><p>Class ${esc(s.class)}-${esc(s.section)} • Roll No. ${esc(s.roll||'—')} • Registration No. ${esc(s.id)}</p></div><div class="hero-mark" style="overflow:hidden; background:#fff; padding:4px;"><img src="/logo.png" alt="RBIC" style="width:100%; height:100%; object-fit:contain; border-radius:14px;"></div></div>
+  ${renderNotifBanner()}
+  ${renderDashboardRecentNotices()}
+  
+  <div class="grid stats-5">
+    <!-- 1st CARD: TODAY ATTENDANCE -->
+    <div class="card stat">
+      <div class="label">TODAY ATTENDANCE</div>
+      <div class="num" style="font-size:16px; margin-top:6px;">
+        ${todayAttStatus === 'P' ? '<span class="att-p" style="padding:4px 10px;">PRESENT (P)</span>' : 
+          (todayAttStatus === 'A' ? '<span class="att-a" style="padding:4px 10px;">ABSENT (AB)</span>' : 
+          '<span style="background:#fff3cd; color:#856404; font-weight:800; padding:4px 8px; border-radius:6px; font-size:12px;">⏳ PENDING</span>')}
+      </div>
+      <div class="hint" style="margin-top:6px;">${todayDateStr}</div>
+    </div>
+
+    <div class="card stat"><div class="label">ATTENDANCE %</div><div class="num">${attendancePct}%</div><div class="hint">Live record</div></div>
+    <div class="card stat"><div class="label">FEE PAID</div><div class="num paid">${money(s.paid||0)}</div><div class="hint">Paid dues</div></div>
+    <div class="card stat"><div class="label">TOTAL DUE</div><div class="num ${due?'pending':'paid'}">${money(due)}</div><div class="hint">Session balance</div></div>
+    
+    <!-- 5th CARD: CURRENT MONTH STATUS -->
+    <div class="card stat">
+      <div class="label">CURRENT MONTH STATUS</div>
+      <div class="num ${isMonthPaid ? 'paid' : 'pending'}" style="font-size:15px; margin-top:6px;">
+        ${isMonthPaid ? 'Paid' : 'Not Paid till ' + esc(currentMonthName)}
+      </div>
+      <div class="hint ${isMonthPaid ? 'paid' : 'warn'}" style="margin-top:4px;">
+        ${isMonthPaid ? '✓ Up to date' : 'Due: ' + money(dueTillNow)}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid two">
+    <div class="card"><div class="section-head"><div><h2>My Profile</h2><p>Student information</p></div><button class="btn secondary" onclick="showPage('profile')">View Profile</button></div><p><b>${esc(s.name)}</b><br>Father: ${esc(s.father||'—')}<br>Mother: ${esc(s.mother||'—')}<br>Mobile: ${esc(s.mobile||'—')}<br>Class: ${esc(s.class)}-${esc(s.section)} • Roll: ${esc(s.roll||'—')}</p></div>
+    <div class="card">
+      <div class="section-head"><div><h2>Quick Links</h2><p>Student portals</p></div></div>
+      <div class="notice" style="cursor:pointer;" onclick="showPage('attendance')"><b>📅 View Full Attendance Calendar</b><p>Check date-wise P/AB register and monthly records.</p></div>
+      <div class="notice"><b>Notifications</b><p>Receive push alerts and school notices instantly.</p></div>
+    </div>
+  </div>`;
+}
+function studentProfilePage(){
+  const s = currentStudent(); if(!s) return studentDashboard();
+  document.getElementById('content').innerHTML=`<div class="section-head"><div><h2 style="font-size:18px;margin:0">My Profile</h2><p>Verified Student Record</p></div></div><div class="card"><div class="grid two"><div><h2 style="font-size:15px">${esc(s.name)}</h2><p class="mini">Registration No. ${esc(s.id)}</p><div class="notice"><b>Class</b><p>${esc(s.class)}-${esc(s.section)} • Roll No. ${esc(s.roll||'—')}</p></div><div class="notice"><b>Father Name</b><p>${esc(s.father||'—')}</p></div><div class="notice"><b>Mother Name</b><p>${esc(s.mother||'—')}</p></div></div><div><div class="notice"><b>Mobile</b><p>${esc(s.mobile||'—')}</p></div><div class="notice"><b>Date of Birth</b><p>${esc(s.dob||'—')}</p></div><div class="notice"><b>Address</b><p>${esc(s.address||'—')}</p></div></div></div></div>`;
+}
+
+function studentFeesPage(){
+  const s = currentStudent(); if(!s) return studentDashboard();
+  const history = s.feeHistory||[], due = Math.max(0,(s.fees||0)-(s.paid||0));
+  document.getElementById('content').innerHTML=`<div class="section-head"><div><h2 style="font-size:18px;margin:0">My Fees</h2><p>Fee details and payment receipts</p></div></div><div class="grid stats"><div class="card stat"><div class="label">TOTAL FEE</div><div class="num">${money(s.fees||0)}</div></div><div class="card stat"><div class="label">MONTHLY FEE</div><div class="num">${money(s.monthlyFee||0)}</div></div><div class="card stat"><div class="label">PAID</div><div class="num paid">${money(s.paid||0)}</div></div><div class="card stat"><div class="label">PENDING</div><div class="num ${due?'pending':'paid'}">${money(due)}</div></div></div><div class="card"><div class="section-head"><div><h2>Payment History</h2><p>Receipts recorded with exact date & time</p></div></div>${history.length?`<div class="table-wrap"><table><thead><tr><th>Receipt No.</th><th>Month</th><th>Amount</th><th>Mode</th><th>Payment Date</th></tr></thead><tbody>${history.slice().reverse().map(h=>`<tr><td><b>${esc(h.receipt||'—')}</b></td><td>${esc(h.month||'—')}</td><td class="paid">${money(h.amount||0)}</td><td>${esc(h.mode||'—')}</td><td>${esc(h.date||'—')}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No payment history recorded yet.</div>'}</div>`;
+}
+
+function studentAttendancePage(){
+  const s = currentStudent();
+  if(!s) return studentDashboard();
+
+  const now = new Date();
+  const curYear = String(now.getFullYear());
+  const curMonthNum = String(now.getMonth() + 1).padStart(2,'0');
+  const currentRealMonthName = now.toLocaleString('default', { month: 'long' }); // Direct sahi month name (e.g. September)
+  
+  let daysInMonth = new Date(Number(curYear), Number(curMonthNum), 0).getDate();
+  let daysArray = Array.from({length: daysInMonth}, (_, i) => i + 1);
+
+  let pCount = 0;
+  let aCount = 0;
+  let totalMarkedDays = 0;
+
+  let calendarHtml = daysArray.map(dayNum => {
+    let dayStr = String(dayNum).padStart(2,'0');
+    let dateKey = `${curYear}-${curMonthNum}-${dayStr}_${s.id}`;
+    let status = attendance[dateKey]; // 'P', 'A' ya undefined
+
+    let badgeHtml = `<span style="background:#fff3cd; color:#856404; font-weight:800; padding:4px 10px; border-radius:6px; font-size:11px;">⏳ PENDING</span>`;
+    
+    if(status === 'P') {
+      pCount++;
+      totalMarkedDays++;
+      badgeHtml = `<span class="att-p" style="padding:4px 12px; font-size:12px;">P (Present)</span>`;
+    } else if(status === 'A') {
+      aCount++;
+      totalMarkedDays++;
+      badgeHtml = `<span class="att-a" style="padding:4px 12px; font-size:12px;">AB (Absent)</span>`;
+    }
+
+    let dateObj = new Date(`${curYear}-${curMonthNum}-${dayStr}`);
+    let dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+
+    return `
+      <div class="card" style="padding:14px; display:flex; justify-content:space-between; align-items:center; background:#fafbfc; border:1px solid var(--line);">
+        <div>
+          <b style="font-size:13px; color:var(--ink);">${dayNum}/${curMonthNum}/${curYear}</b>
+          <span class="mini" style="margin-left:6px; color:var(--muted); text-transform:uppercase;">(${dayName})</span>
+        </div>
+        <div>${badgeHtml}</div>
+      </div>
+    `;
+  }).join('');
+
+  let monthPct = totalMarkedDays ? Math.round((pCount / totalMarkedDays) * 100) : 0;
+
+  document.getElementById('content').innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2 style="font-size:18px;margin:0">📅 My Attendance Calendar (${currentRealMonthName} ${curYear})</h2>
+        <p>Current month ki live attendance (Present, Absent ya Pending) dekhein.</p>
+      </div>
+    </div>
+
+    <div class="grid stats" style="margin-bottom:16px;">
+      <div class="card stat"><div class="label">MONTH ATTENDANCE %</div><div class="num">${monthPct}%</div><div class="hint">Calculated live score</div></div>
+      <div class="card stat"><div class="label">TOTAL PRESENT (P)</div><div class="num paid">${pCount} Days</div></div>
+      <div class="card stat"><div class="label">TOTAL ABSENT (AB)</div><div class="num pending">${aCount} Days</div></div>
+      <div class="card stat"><div class="label">MARKED DAYS</div><div class="num">${totalMarkedDays} / ${daysInMonth}</div><div class="hint">This month</div></div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <h2>Daily Calendar Register</h2>
+        <span class="tag green">Live Sync Active</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px; max-height:500px; overflow-y:auto; padding-right:4px;">
+        ${calendarHtml}
+      </div>
+    </div>
+  `;
+}
+function studentMarksPage(){
+  const s = currentStudent(); if(!s) return studentDashboard();
+  document.getElementById('content').innerHTML=`<div class="section-head"><div><h2 style="font-size:18px;margin:0">My Marks</h2><p>Saved exam results for ${esc(s.name)}</p></div></div><div class="grid two">${exams.map(e=>{let raw=marks[e.id+'_'+s.id];let has=raw!==undefined&&raw!=='';let pct=has?Math.round(Number(raw)/Number(e.max)*100):null;return `<div class="card"><div class="section-head"><div><h2>${esc(e.name)}</h2><p>${esc(e.date)} • Class ${esc(e.class)} • ${esc(e.subject)}</p></div><span class="tag">Max ${esc(e.max)}</span></div>${has?`<div class="num" style="font-size:30px">${esc(raw)} <span class="mini">/ ${esc(e.max)}</span></div><p>Percentage: <b>${pct}%</b> • Grade: <b>${grade(pct)}</b></p>`:'<div class="empty">Marks not entered yet.</div>'}</div>`}).join('')||'<div class="card empty">No exams available.</div>'}</div>`;
+}
+
+/* ==================== STUDENTS DIRECTORY ==================== */
+function studentsPage(){
+  const allCls = getAllActiveClasses();
+  document.getElementById('content').innerHTML=`
+    <div class="section-head">
+      <div><h2 style="font-size:18px;margin:0">Students Directory</h2><p>Pehle class select karein student records dekhne ke liye.</p></div>
+      <div class="toolbar">
+        <select class="search" id="classFilterSelect" onchange="renderStudents()">
+          <option value="">-- Select Class --</option>
+          <option value="ALL">All Students (${students.length})</option>
+          ${allCls.map(c => `<option value="${c}">Class ${c}</option>`).join('')}
+        </select>
+        <input class="search" id="studentSearch" placeholder="Search name / registration ID" oninput="renderStudents()">
+        <button class="btn" onclick="studentForm()">+ Register Student</button>
+      </div>
+    </div>
+    <div class="card"><div id="studentTable"></div></div>
+  `;
+  renderStudents();
+}
+
+function renderStudents(){
+  let selectedClass = val('classFilterSelect');
+  let q = (val('studentSearch')||'').toLowerCase();
+  
+  if (!selectedClass && !q) {
+    document.getElementById('studentTable').innerHTML = `
+      <div class="empty" style="padding:45px 20px;">
+        <div style="font-size:36px;margin-bottom:8px;">🏫</div>
+        <b style="font-size:14px;color:var(--ink);">Kripya Class Select Karein</b>
+        <p style="margin:6px 0 0;font-size:12px;color:var(--muted);">Upar dropdown se koi class chunein ya "All Students" select karein.</p>
+      </div>
+    `;
+    return;
+  }
+
+  let a = students.filter(s => {
+    let studentClassFull = s.class + '-' + (s.section || 'A');
+    let matchesClass = (selectedClass === 'ALL' || !selectedClass) ? true : (studentClassFull === selectedClass || s.class === selectedClass);
+    let matchesQuery = [s.id, s.name, s.father, s.class, s.section, s.mobile].join(' ').toLowerCase().includes(q);
+    return matchesClass && matchesQuery;
+  });
+
+  document.getElementById('studentTable').innerHTML = a.length ? `
+    <div style="margin-bottom:10px; font-size:12px; color:var(--muted);">
+      Showing <b>${a.length}</b> student records ${selectedClass && selectedClass !== 'ALL' ? 'in <b>Class ' + selectedClass + '</b>' : ''}
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Registration No.</th>
+            <th>Student</th>
+            <th>Class</th>
+            <th>Father</th>
+            <th>Mobile</th>
+            <th>Attendance</th>
+            <th>Fees Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${a.map(s=>`
+            <tr>
+              <td><b>${esc(s.id)}</b></td>
+              <td><b>${esc(s.name)}</b><div class="mini">Roll ${esc(s.roll||'—')}</div></td>
+              <td><span class="tag">Class ${esc(s.class)}-${esc(s.section||'A')}</span></td>
+              <td>${esc(s.father)}</td>
+              <td>${esc(s.mobile)}</td>
+              <td>${s.att}%</td>
+              <td><span class="${s.paid>=s.fees?'paid':'pending'}">${money(s.paid)}</span> / ${money(s.fees)}</td>
+              <td class="actions">
+                <button class="btn secondary" onclick="studentForm('${esc(s.id)}')">Edit</button>
+                ${currentRole==='admin'?`<button class="btn red" onclick="deleteStudent('${esc(s.id)}')">Delete</button>`:''}
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  ` : '<div class="empty">No students found for the selected criteria.</div>';
+}
+
+function generateAutoRegId(classVal){
+  let cleanCls = (classVal || '10-A').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+  let prefix = 'RB' + cleanCls;
+  
+  let maxSeq = 0;
+  students.forEach(s => {
+    let sid = String(s.id || '').toUpperCase();
+    if(sid.startsWith(prefix)){
+      let numPart = parseInt(sid.replace(prefix, ''), 10);
+      if(!isNaN(numPart) && numPart > maxSeq){
+        maxSeq = numPart;
+      }
+    }
+  });
+
+  let nextSeq = String(maxSeq + 1).padStart(3, '0');
+  return prefix + nextSeq;
+}
+
+function field(label, id, value='', type='text', isRequired=false){
+  return `
+    <div class="field">
+      <label>${label} ${isRequired ? '<span style="color:var(--red)">*</span>' : '<span style="color:var(--muted);font-weight:400">(Optional)</span>'}</label>
+      <input id="${id}" type="${type}" value="${esc(value)}" ${isRequired ? 'required' : ''}>
+    </div>
+  `;
+}
+
+function studentForm(id=''){
+  if(currentRole==='student'){toast('Students cannot edit records');return}
+  let s = students.find(x=>x.id===id) || {
+    id:'', name:'', father:'', mother:'', mobile:'', address:'', dob:'', 
+    class:'10', section:'A', roll:'', fees:30000, monthlyFee:2500, paid:0, att:100
+  };
+  const allCls = getAllActiveClasses();
+  const initialClass = s.class ? (s.class + '-' + (s.section||'A')) : (allCls[0] || '10-A');
+  const autoId = id ? s.id : generateAutoRegId(initialClass);
+  
+  openModal(`
+    <div class="modalhead">
+      <div>
+        <h3 style="margin:0;">${id ? 'Edit Student' : 'New Admission / Registration'}</h3>
+        <p class="mini" style="margin:4px 0 0;">Auto Generated Reg ID: <b style="color:var(--blue);font-size:12px;">${esc(autoId)}</b></p>
+      </div>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="saveStudent(event,'${esc(id)}')">
+      <div class="formgrid">
+        <div class="field">
+          <label>REGISTRATION NO. / LOGIN ID</label>
+          <input id="sid" type="text" value="${esc(autoId)}" readonly style="background:#f4f7fb;font-weight:800;color:var(--blue);cursor:not-allowed;">
+        </div>
+
+        <div class="field">
+          <label>SELECT CLASS <span style="color:var(--red)">*</span></label>
+          <select id="sclass_select" onchange="onClassChangeAutoReg(this.value, '${esc(id)}')" required>
+            ${allCls.map(c => `<option value="${c}" ${(s.class+'-'+(s.section||'A'))===c?'selected':''}>Class ${c}</option>`).join('')}
+          </select>
+        </div>
+        <input type="hidden" id="sclass" value="${esc(s.class || '10')}">
+        <input type="hidden" id="ssection" value="${esc(s.section || 'A')}">
+
+        ${field('Student Name', 'sname', s.name, 'text', true)}
+        ${field('Roll No.', 'sroll', s.roll, 'text', false)}
+        ${field('Father Name', 'sfather', s.father, 'text', true)}
+        ${field('Mother Name', 'smother', s.mother||'', 'text', true)}
+        ${field('Mobile Number', 'smobile', s.mobile, 'tel', true)}
+        ${field('Date of Birth', 'sdob', s.dob||'', 'date', false)}
+        ${field('Annual Fee (Total ₹)', 'sfees', s.fees, 'number', true)}
+        ${field('Monthly Fee (₹)', 'smonthly', s.monthlyFee||'', 'number', false)}
+        ${field('Address / Village', 'saddress', s.address||'', 'text', false)}
+      </div>
+
+      ${id?'':'<div class="field"><label>STUDENT LOGIN PASSWORD <span style="color:var(--muted);font-weight:400">(Optional: Default Mobile No. / 123456)</span></label><input id="spass" type="password" minlength="6" placeholder="Leave blank to use default (Mobile / 123456)"></div>'}
+      
+      <div class="modalactions">
+        <button type="button" class="btn gray" onclick="closeModal()">Cancel</button>
+        <button class="btn">${id ? 'Save Changes' : 'Register Student'}</button>
+      </div>
+    </form>
+  `);
+  syncClassFields(val('sclass_select') || initialClass);
+}
+
+function onClassChangeAutoReg(newClass, isEditId){
+  syncClassFields(newClass);
+  if(!isEditId){
+    let newRegId = generateAutoRegId(newClass);
+    let idInput = document.getElementById('sid');
+    if(idInput) idInput.value = newRegId;
+  }
+}
+
+function syncClassFields(clsVal){
+  if(!clsVal) return;
+  const p = clsVal.split('-');
+  const clEl = document.getElementById('sclass');
+  const scEl = document.getElementById('ssection');
+  if(clEl) clEl.value = p[0];
+  if(scEl) scEl.value = p[1] || 'A';
+}
+
+async function saveStudent(e, id){
+  e.preventDefault();
+  const fees = +val('sfees') || 0;
+  const mFee = +val('smonthly') || Math.round(fees/12);
+  const regId = val('sid').trim().toUpperCase();
+  const mobileNo = val('smobile').trim();
+
+  let o = {
+    id: regId, 
+    name: val('sname').trim(), 
+    father: val('sfather').trim(), 
+    mother: val('smother').trim(),
+    mobile: mobileNo, 
+    dob: val('sdob')||'', 
+    address: val('saddress').trim(),
+    class: val('sclass').trim(), 
+    section: val('ssection').trim().toUpperCase(), 
+    roll: val('sroll').trim(),
+    fees: fees, 
+    monthlyFee: mFee
+  };
+
+  let old = students.find(s=>s.id===id);
+  o.paid = old?.paid || 0;
+  o.paidMonths = old?.paidMonths || [];
+  o.feeHistory = old?.feeHistory || [];
+  o.att = old?.att !== undefined ? old.att : 100;
+
+  // 1. Cloud Firestore me Student Data Save
+  await window.db.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(o.id).set({
+    value: o, loginId: o.id, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, {merge: true});
+
+  // 2. Student ke liye Background me Firebase Auth Account Create (Default Mobile No. / 123456)
+  if(!id && window.RBCreateAuth){
+    try {
+      const defaultPass = mobileNo.length >= 6 ? mobileNo : '123456';
+      await window.RBCreateAuth(o.id, defaultPass);
+    } catch(authErr) {
+      console.warn('Auth already exists or secondary init:', authErr);
+    }
+  }
+
+  closeModal();
+  toast(`Student ${o.id} registered! Login ID: ${o.id}, Password: ${mobileNo || '123456'}`);
+}
+async function deleteStudent(id) {
+  if (currentRole !== 'admin') { toast('Only Admin can delete students'); return; }
+  const cleanId = String(id).trim().toUpperCase();
+  if (!confirm(`Permanently delete student ${cleanId}?`)) return;
+
+  try {
+    students = students.filter(s => String(s.id).trim().toUpperCase() !== cleanId);
+    persist();
+    renderStudents();
+    toast('Deleting from cloud database...');
+
+    const firestoreDb = window.db || firebase.firestore();
+    const colRef = firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('students');
+    
+    await Promise.all([
+      colRef.doc(cleanId).delete(),
+      colRef.doc(String(id)).delete()
+    ]);
+
+    const batch = firestoreDb.batch();
+    const attSnap = await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('attendance').where('studentId', '==', cleanId).get();
+    attSnap.forEach(doc => batch.delete(doc.ref));
+    const marksSnap = await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('marks').where('studentId', '==', cleanId).get();
+    marksSnap.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+
+    toast('Student permanently erased!');
+  } catch (err) {
+    console.error('Delete error:', err);
+    toast('Cloud delete failed: ' + (err.message || 'Error'));
+  }
+}
+
+/* TEACHERS DIRECTORY */
+function teachersPage(){
+  const list = currentRole==='admin'?teachers:teachers.filter(t=>String(t.id).toUpperCase()===String(currentLoginId).toUpperCase());
+  document.getElementById('content').innerHTML=`<div class="section-head"><div><h2 style="font-size:18px;margin:0">Teachers</h2><p>${currentRole==='admin'?'Directory and access control.':'Your teacher profile.'}</p></div>${currentRole==='admin'?'<button class="btn" onclick="teacherForm()">+ Add Teacher</button>':'<span class="tag">Teacher Profile</span>'}</div><div class="grid three">${list.map(t=>`<div class="card"><div style="display:flex;gap:10px;align-items:center"><div class="avatar">${esc((t.name||'T').slice(0,2).toUpperCase())}</div><div><b>${esc(t.name)}</b><div class="mini">${esc(t.subject)}</div></div></div><p class="mini" style="margin:14px 0">📱 ${esc(t.mobile)}<br>🏫 ${esc(t.classes)}<br>🔐 Login ID: ${esc(t.id)}</p>${currentRole==='admin'?`<div class="actions"><button class="btn secondary" onclick="teacherForm('${esc(t.id)}')">Edit</button><button class="btn red" onclick="deleteTeacher('${esc(t.id)}')">Delete</button></div>`:'<span class="mini">Active</span>'}</div>`).join('')||'<div class="card empty">Teacher profile not found.</div>'}</div>`;
+}
+function teacherForm(id=''){let t=teachers.find(x=>x.id===id)||{id:'',name:'',subject:'',mobile:'',classes:'',password:''};openModal(`<div class="modalhead"><h3>${id?'Edit':'Add'} Teacher</h3><button class="close" onclick="closeModal()">×</button></div><form onsubmit="saveTeacher(event,'${esc(id)}')"><div class="formgrid">${field('Teacher ID','tid',t.id,'text',true)}${field('Teacher Name','tname',t.name,'text',true)}${field('Subject','tsub',t.subject,'text',true)}${field('Mobile','tmob',t.mobile,'tel',true)}${field('Assigned Classes','tclass',t.classes,'text',true)}${field('Login Password','tpass','','password',false)}</div><p class="mini">Default password: 123456</p><div class="modalactions"><button type="button" class="btn gray" onclick="closeModal()">Cancel</button><button class="btn">Save Teacher</button></div></form>`)}
+
+async function saveTeacher(e,id){
+  e.preventDefault();if(currentRole!=='admin'){toast('Only Admin can modify teachers');return}
+  let o={id:val('tid').trim().toUpperCase(),name:val('tname').trim(),subject:val('tsub').trim(),mobile:val('tmob').trim(),classes:val('tclass').trim()};
+  let password=val('tpass').trim() || '123456';
+  if(!o.id||!o.name||!o.subject){toast('Teacher ID, name and subject required');return}
+  if(!id&&teachers.some(t=>t.id===o.id)){toast('Teacher ID already exists');return}
+  try{
+    if(!id){
+      if(window.RBCreateAuth) await window.RBCreateAuth(o.id,password);
+      o.passwordChanged=false;
+      teachers.push(o);
+    }else{
+      let old=teachers.find(t=>t.id===id);
+      o.passwordChanged=old?.passwordChanged||false;
+      teachers[teachers.findIndex(t=>t.id===id)]=o;
+    }
+    persist();
+    const firestoreDb = window.db || firebase.firestore();
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('teachers').doc(o.id).set({value:o, loginId:o.id, updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    closeModal();teachersPage();toast(id?'Teacher updated':'Teacher added');
+  }catch(err){console.error(err);toast((err&&err.message?err.message:'Failed').replace('Firebase:','').trim())}
+}
+
+async function deleteTeacher(id) {
+  if (currentRole !== 'admin') { toast('Only Admin can delete teachers'); return; }
+  const cleanId = String(id).trim().toUpperCase();
+  if (!confirm(`Permanently delete teacher record ${cleanId}?`)) return;
+
+  try {
+    teachers = teachers.filter(t => String(t.id).trim().toUpperCase() !== cleanId);
+    persist();
+    teachersPage();
+    toast('Deleting teacher...');
+
+    const firestoreDb = window.db || firebase.firestore();
+    const colRef = firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('teachers');
+    await Promise.all([
+      colRef.doc(cleanId).delete(),
+      colRef.doc(String(id)).delete()
+    ]);
+
+    toast('Teacher permanently deleted!');
+  } catch (err) {
+    console.error('Teacher delete error:', err);
+    toast('Failed to delete teacher from cloud');
+  }
+}
+
+/* ==================== ENHANCED FEES MODULE ==================== */
+let currentFeesTab = 'all';
+
+function feesPage(){
+  let classes = getAllActiveClasses();
+  let currentMonthName = RB_MONTHS[new Date().getMonth() === 0 ? 9 : (new Date().getMonth() - 4 + 12) % 12];
+  
+  document.getElementById('content').innerHTML=`
+    <div class="section-head">
+      <div>
+        <h2 style="font-size:18px;margin:0">Fees Management & Register</h2>
+        <p>Month-wise Due List, Paid List aur Payment History date/time ke saath dekhein.</p>
+      </div>
+      <div class="toolbar">
+        <select class="search" id="feeClass" onchange="renderFees()">
+          <option value="">-- Select Class --</option>
+          ${currentRole==='admin'?'<option value="ALL">All Classes</option>':''}
+          ${classes.map(c=>`<option value="${esc(c)}">Class ${esc(c)}</option>`).join('')}
+        </select>
+        <select class="search" id="feeMonthFilter" onchange="renderFees()" style="min-width:140px;">
+          <option value="">-- All Months --</option>
+          ${RB_MONTHS.map(m=>`<option value="${m}" ${m===currentMonthName?'selected':''}>${m}</option>`).join('')}
+        </select>
+        <button class="btn green" onclick="downloadFeeClassReport()">⬇ Export Filtered Excel</button>
+      </div>
+    </div>
+
+    <div class="subtabs">
+      <button class="subtab ${currentFeesTab==='all'?'active':''}" onclick="setFeesTab('all')">📋 All Records</button>
+      <button class="subtab ${currentFeesTab==='due'?'active':''}" onclick="setFeesTab('due')">⏳ Due Fees List</button>
+      <button class="subtab ${currentFeesTab==='paid'?'active':''}" onclick="setFeesTab('paid')">✅ Paid Fees List</button>
+    </div>
+
+    <div id="feesStatsArea"></div>
+    <div class="card"><div id="feesTable"></div></div>
+  `;
+  renderFees();
+}
+
+function setFeesTab(tab){
+  currentFeesTab = tab;
+  feesPage();
+}
+
+function renderFees(){
+  let selected = val('feeClass');
+  let selectedMonth = val('feeMonthFilter');
+  const statsArea = document.getElementById('feesStatsArea');
+  const tableEl = document.getElementById('feesTable');
+  if(!tableEl) return;
+
+  if (!selected) {
+    if(statsArea) statsArea.innerHTML = '';
+    tableEl.innerHTML = `
+      <div class="empty" style="padding:45px 20px;">
+        <div style="font-size:36px;margin-bottom:8px;">₹</div>
+        <b style="font-size:14px;color:var(--ink);">Kripya Pehle Class Select Karein</b>
+        <p style="margin:6px 0 0;font-size:12px;color:var(--muted);">Upar dropdown se koi class chunein fees record, due list aur payment history dekhne ke liye.</p>
+      </div>
+    `;
+    return;
+  }
+
+  let a = students.filter(s => {
+    let full = s.class + '-' + (s.section || 'A');
+    if (selected === 'ALL') return true;
+    return full === selected || s.class === selected;
+  });
+
+  let displayList = a.filter(s => {
+    let pm = s.paidMonths || [];
+    let isMonthPaid = selectedMonth ? pm.includes(selectedMonth) : (s.paid >= s.fees);
+
+    if(currentFeesTab === 'due'){
+      return selectedMonth ? !isMonthPaid : (s.paid < s.fees);
+    } else if(currentFeesTab === 'paid'){
+      return selectedMonth ? isMonthPaid : (s.paid > 0);
+    }
+    return true;
+  });
+
+  const totFee = a.reduce((x,s)=>x+s.fees, 0);
+  const mFee = a.reduce((x,s)=>x+(s.monthlyFee||0), 0);
+  const pFee = a.reduce((x,s)=>x+s.paid, 0);
+  const pendFee = a.reduce((x,s)=>x+Math.max(0, s.fees-s.paid), 0);
+
+  if(statsArea){
+    statsArea.innerHTML = `
+      <div class="grid stats" style="margin-bottom:16px;">
+        <div class="card stat"><div class="label">TOTAL STUDENTS</div><div class="num">${a.length}</div><div class="hint">In Class ${selected}</div></div>
+        <div class="card stat"><div class="label">${selectedMonth?selectedMonth.toUpperCase()+' DUE':'TOTAL DUE'}</div><div class="num pending">${money(pendFee)}</div><div class="hint warn">Balance dues</div></div>
+        <div class="card stat"><div class="label">COLLECTED</div><div class="num paid">${money(pFee)}</div><div class="hint paid">Paid dues</div></div>
+        <div class="card stat"><div class="label">FILTERED COUNT</div><div class="num">${displayList.length}</div><div class="hint">${currentFeesTab.toUpperCase()} Records</div></div>
+      </div>
+    `;
+  }
+
+  tableEl.innerHTML = displayList.length ? `
+    <div style="margin-bottom:10px; font-size:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:center;">
+      <span>Showing <b>${displayList.length}</b> records (${currentFeesTab.toUpperCase()}) ${selectedMonth ? 'for month: <b>' + selectedMonth + '</b>' : ''}</span>
+      <span class="mini">Class: <b>${selected}</b></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Registration No.</th>
+            <th>Student</th>
+            <th>Mobile</th>
+            <th>Total Fee</th>
+            <th>Monthly Fee</th>
+            <th>Paid Amount</th>
+            <th>Total Due</th>
+            <th>Apr-Current Month Status</th>
+            <th>${selectedMonth ? selectedMonth + ' Status' : 'Latest Paid Till'}</th>
+            <th>Payment Date & History</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${displayList.map(s=>{
+            let pm = s.paidMonths || [];
+            let pending = Math.max(0, s.fees - s.paid);
+            let hasPaidSelected = selectedMonth ? pm.includes(selectedMonth) : false;
+            let hist = s.feeHistory || [];
+            let lastPayment = hist.length ? hist[hist.length - 1] : null;
+
+            return `
+              <tr>
+                <td><b>${esc(s.id)}</b></td>
+                <td><b>${esc(s.name)}</b><div class="mini">Class ${esc(s.class)}-${esc(s.section||'A')}</div></td>
+                <td>${esc(s.mobile||'—')}</td>
+                <td>${money(s.fees)}</td>
+                <td>${money(s.monthlyFee||0)}</td>
+                <td class="paid"><b>${money(s.paid)}</b></td>
+                <td class="${pending?'pending':'paid'}"><b>${money(pending)}</b></td>
+
+                <!-- NAYA COLUMN: APRIL SE CURRENT MONTH STATUS -->
+                <td>
+                  ${(() => {
+                    const mFee = Number(s.monthlyFee || (s.fees ? Math.round(s.fees / 12) : 0));
+                    // Session April (Month 3) se start hota hai
+                    const nowMonthIdx = new Date().getMonth();
+                    const monthsCount = ((nowMonthIdx - 3 + 12) % 12) + 1;
+                    const curMonthName = RB_MONTHS[Math.min(monthsCount - 1, RB_MONTHS.length - 1)];
+                    const targetTillNow = Math.min(s.fees, mFee * monthsCount);
+                    const dueTillNow = Math.max(0, targetTillNow - s.paid);
+
+                    return `
+                      <div style="font-weight:700; font-size:11px; margin-bottom:3px;">
+                        Apr-${curMonthName.slice(0,3)}: ${money(targetTillNow)}
+                      </div>
+                      ${dueTillNow === 0 ? 
+                        `<span class="tag green">✓ Up to Date (${curMonthName})</span>` : 
+                        `<span class="tag red">⏳ Due: ${money(dueTillNow)}</span>`
+                      }
+                    `;
+                  })()}
+                </td>
+
+                <td>
+                  ${selectedMonth ? 
+                    (hasPaidSelected ? '<span class="tag green">✓ Paid ('+selectedMonth+')</span>' : '<span class="tag red">⏳ Due ('+selectedMonth+')</span>') :
+                    (pm.length ? '<span class="tag green">'+esc(pm[pm.length-1])+'</span>' : '<span class="tag red">Not Paid</span>')
+                  }
+                </td>
+                <td>
+                  ${lastPayment ? 
+                    `<div><b>${esc(lastPayment.date)}</b></div><div class="mini">${esc(lastPayment.month)} • ${money(lastPayment.amount)} • ${esc(lastPayment.receipt||'')}</div>` : 
+                    '<span class="mini">No payment logs</span>'
+                  }
+                </td>
+                <td class="actions">
+                  <button class="btn ${pending?'green':'gray'}" onclick="paymentForm('${esc(s.id)}')" ${pending?'':'disabled'}>
+                    ${pending?'Record Payment':'Paid'}
+                  </button>
+                  <button class="btn secondary" style="padding:5px 8px;font-size:10px;" onclick="viewPaymentReceipts('${esc(s.id)}')">
+                    📜 Receipts (${hist.length})
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  ` : `<div class="empty">Koi student record nahi mila is filter ke hisaab se (${currentFeesTab.toUpperCase()}${selectedMonth ? ' - ' + selectedMonth : ''}).</div>`;
+}
+
+function viewPaymentReceipts(id){
+  let s = students.find(x=>x.id===id);
+  if(!s) return;
+  let hist = s.feeHistory || [];
+  openModal(`
+    <div class="modalhead">
+      <div><h3>Payment Receipt History</h3><div class="mini">${esc(s.name)} • ID: ${esc(s.id)}</div></div>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div style="margin-bottom:12px; font-size:12px;">
+      <b>Annual Fee:</b> ${money(s.fees)} | <b class="paid">Total Paid:</b> ${money(s.paid)} | <b class="pending">Total Due:</b> ${money(Math.max(0, s.fees - s.paid))}
+    </div>
+    ${hist.length ? `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Receipt No.</th><th>Fees Month</th><th>Amount</th><th>Date & Time</th><th>Payment Mode</th></tr>
+          </thead>
+          <tbody>
+            ${hist.slice().reverse().map(h=>`
+              <tr>
+                <td><b>${esc(h.receipt||'—')}</b></td>
+                <td><span class="tag green">${esc(h.month||'—')}</span></td>
+                <td class="paid"><b>${money(h.amount)}</b></td>
+                <td>${esc(h.date)} ${h.timestamp ? '<div class="mini">'+esc(h.timestamp)+'</div>' : ''}</td>
+                <td>${esc(h.mode||'Cash')}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    ` : '<div class="empty">No receipts recorded yet for this student.</div>'}
+    <div class="modalactions"><button class="btn gray" onclick="closeModal()">Close</button></div>
+  `);
+}
+
+function paymentForm(id){
+  let s=students.find(x=>x.id===id);if(!s)return;let due=s.fees-s.paid;
+  let pm=s.paidMonths||[], available=RB_MONTHS.filter(m=>!pm.includes(m));
+  let today = new Date().toISOString().slice(0,10);
+
+  openModal(`
+    <div class="modalhead">
+      <div><h3>Record Fee Payment</h3><div class="mini">${esc(s.name)} • ${esc(s.id)} • Class ${esc(s.class)}-${esc(s.section||'A')}</div></div>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div class="grid two" style="margin-bottom:12px">
+      <div class="card" style="box-shadow:none;background:#f8faff"><div class="mini">ANNUAL FEE</div><b>${money(s.fees)}</b></div>
+      <div class="card" style="box-shadow:none;background:#f8faff"><div class="mini">MONTHLY FEE</div><b>${money(s.monthlyFee||0)}</b></div>
+      <div class="card" style="box-shadow:none;background:#f8faff"><div class="mini">PAID TILL NOW</div><b class="paid">${money(s.paid)}</b></div>
+      <div class="card" style="box-shadow:none;background:#fff5f5"><div class="mini">OUTSTANDING DUE</div><b class="pending">${money(due)}</b></div>
+    </div>
+    <form onsubmit="savePayment(event,'${esc(id)}')">
+      <div class="formgrid">
+        <div class="field">
+          <label>FEE MONTH (SELECT MONTH)</label>
+          <select id="paymonth" required>
+            ${available.map(m=>`<option>${m}</option>`).join('')||'<option value="">All months already paid</option>'}
+          </select>
+        </div>
+        <div class="field">
+          <label>PAYMENT DATE (DATE, MONTH, YEAR)</label>
+          <input id="paydate" type="date" value="${today}" required>
+        </div>
+        ${field('Payment Amount (₹)','payamount',Math.min(s.monthlyFee||due,due),'number',true)}
+        <div class="field"><label>PAYMENT MODE</label>
+          <select id="paymode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Cheque</option></select>
+        </div>
+      </div>
+      <div class="modalactions">
+        <button type="button" class="btn gray" onclick="closeModal()">Cancel</button>
+        <button class="btn" ${available.length?'':'disabled'}>Save Payment & Generate Receipt</button>
+      </div>
+    </form>
+  `);
+}
+
+async function savePayment(e,id){
+  e.preventDefault();
+  let s=students.find(x=>x.id===id), amt=+val('payamount')||0, month=val('paymonth'), payDate=val('paydate'), due=s?Math.max(0,s.fees-s.paid):0;
+  if(!s||!month||amt<1||amt>due){toast('Valid amount enter karein');return}
+  if(!s.paidMonths) s.paidMonths=[]; 
+  if(!s.feeHistory) s.feeHistory=[];
+  if(s.paidMonths.includes(month)){toast('Yeh month pehle hi jama ho chuka hai');return}
+
+  let parts = payDate.split('-');
+  let displayFormattedDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : new Date().toLocaleDateString('en-IN');
+  let currentTime = new Date().toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'});
+
+  s.paid += amt;
+  s.paidMonths.push(month);
+  s.feeHistory.push({
+    month: month,
+    amount: amt,
+    mode: val('paymode'),
+    date: displayFormattedDate,
+    timestamp: currentTime,
+    rawDate: payDate,
+    receipt: 'RB-' + Date.now().toString().slice(-7)
+  });
+
+  persist();
+  const firestoreDb = window.db || firebase.firestore();
+  await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(s.id).set({
+    value:s, loginId:s.id, updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  },{merge:true});
+
+  closeModal();
+  renderFees();
+  toast(`Fees jama ho gayi • ${month} (${displayFormattedDate})`);
+}
+
+function downloadFeeClassReport(){
+  let selected = val('feeClass');
+  let selectedMonth = val('feeMonthFilter');
+  if(!selected){toast('Export ke liye pehle class chunein');return}
+
+  let a = students.filter(s => {
+    let full = s.class + '-' + (s.section || 'A');
+    if (selected === 'ALL') return true;
+    return full === selected || s.class === selected;
+  });
+
+  let displayList = a.filter(s => {
+    let pm = s.paidMonths || [];
+    let isMonthPaid = selectedMonth ? pm.includes(selectedMonth) : (s.paid >= s.fees);
+    if(currentFeesTab === 'due') return selectedMonth ? !isMonthPaid : (s.paid < s.fees);
+    if(currentFeesTab === 'paid') return selectedMonth ? isMonthPaid : (s.paid > 0);
+    return true;
+  });
+
+  if(!displayList.length){toast('No records to export'); return}
+
+  let rows = displayList.map(s => {
+    let hist = s.feeHistory || [];
+    let lastP = hist.length ? hist[hist.length - 1] : null;
+    return {
+      Registration_No: s.id,
+      Student_Name: s.name,
+      Class: s.class + '-' + (s.section||'A'),
+      Mobile: s.mobile,
+      Total_Fee: s.fees,
+      Monthly_Fee: s.monthlyFee || 0,
+      Paid_Amount: s.paid,
+      Due_Balance: Math.max(0, s.fees - s.paid),
+      Filter_Status: (s.paidMonths||[]).includes(selectedMonth) ? 'PAID' : 'DUE',
+      Paid_Months_List: (s.paidMonths||[]).join(', '),
+      Last_Payment_Date: lastP ? lastP.date : 'N/A',
+      Last_Receipt: lastP ? lastP.receipt : 'N/A'
+    };
+  });
+
+  downloadWorkbook(rows, `Fees_${currentFeesTab.toUpperCase()}_Class_${selected}_${selectedMonth||'All'}.xlsx`);
+  toast('Excel Sheet Downloaded!');
+}
+
+/* ==================== ENHANCED ATTENDANCE MODULE ==================== */
+let currentAttTab = 'daily';
+
+function attendancePage(){
+  let classes = getAllActiveClasses();
+  let today = new Date().toISOString().slice(0,10);
+  let curYear = new Date().getFullYear();
+  let curMonthNum = String(new Date().getMonth() + 1).padStart(2,'0');
+
+  document.getElementById('content').innerHTML=`
+    <div class="section-head">
+      <div>
+        <h2 style="font-size:18px;margin:0">Attendance Management</h2>
+        <p>Daily attendance mark karein ya Monthly Register Calendar dekhein.</p>
+      </div>
+      <div class="toolbar">
+        <select class="search" id="attClass" onchange="renderAttendance()">
+          <option value="">-- Select Class --</option>
+          ${classes.map(c=>`<option value="${c}">Class ${c}</option>`).join('')}
+        </select>
+        
+        <input class="search" id="attDailyDate" type="date" value="${today}" onchange="renderAttendance()" style="${currentAttTab==='daily'?'':'display:none;'}">
+
+        <div id="attMonthControls" style="${currentAttTab==='monthly'?'display:flex;gap:6px;':'display:none;'}">
+          <select class="search" id="attMonthSelect" onchange="renderAttendance()" style="min-width:110px;">
+            ${Array.from({length:12}, (_,i)=>String(i+1).padStart(2,'0')).map(m=>`<option value="${m}" ${m===curMonthNum?'selected':''}>Month ${m}</option>`).join('')}
+          </select>
+          <select class="search" id="attYearSelect" onchange="renderAttendance()" style="min-width:90px;">
+            <option value="2026" selected>2026</option>
+            <option value="2025">2025</option>
+          </select>
+        </div>
+
+        <button class="btn" onclick="saveAttendance()" id="btnSaveAtt" style="${currentAttTab==='daily'?'':'display:none;'}">✓ Save Attendance</button>
+        <button class="btn green" onclick="downloadAttendanceReport()" id="btnDownloadAtt">⬇ Export Excel</button>
+      </div>
+    </div>
+
+    <div class="subtabs">
+      <button class="subtab ${currentAttTab==='daily'?'active':''}" onclick="setAttTab('daily')">✍️ Daily Attendance Entry</button>
+      <button class="subtab ${currentAttTab==='monthly'?'active':''}" onclick="setAttTab('monthly')">📅 View Monthly Register (Date-Wise)</button>
+    </div>
+
+    <div class="card"><div id="attTable"></div></div>
+  `;
+  renderAttendance();
+}
+
+function setAttTab(tab){
+  currentAttTab = tab;
+  attendancePage();
+}
+
+function renderAttendance(){
+  let c = val('attClass');
+  const target = document.getElementById('attTable');
+  if(!target) return;
+
+  if(!c){
+    target.innerHTML = `
+      <div class="empty" style="padding:45px 20px;">
+        <div style="font-size:36px;margin-bottom:8px;">✓</div>
+        <b style="font-size:14px;color:var(--ink);">Kripya Class Select Karein</b>
+        <p style="margin:6px 0 0;font-size:12px;color:var(--muted);">Upar dropdown se koi class chunein attendance mark ya register dekhne ke liye.</p>
+      </div>
+    `;
+    return;
+  }
+
+  let classStudents = students.filter(s=>(s.class+'-'+(s.section||'A'))===c);
+  if(!classStudents.length){
+    target.innerHTML = '<div class="empty">Is class mein koi student record nahi hai.</div>';
+    return;
+  }
+
+  if(currentAttTab === 'daily'){
+    let d = val('attDailyDate') || new Date().toISOString().slice(0,10);
+    target.innerHTML = `
+      <div style="margin-bottom:12px; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
+        <span>Marking Attendance for Date: <b>${esc(d)}</b> (Class <b>${c}</b>)</span>
+        <span class="mini">Total: ${classStudents.length} Students</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Registration No.</th><th>Student Name</th><th>Roll No.</th><th>Overall %</th><th>Mark Status (${esc(d)})</th></tr>
+          </thead>
+          <tbody>
+            ${classStudents.map(s => {
+              let v = attendance[d+'_'+s.id] || 'P';
+              return `
+                <tr>
+                  <td><b>${esc(s.id)}</b></td>
+                  <td><b>${esc(s.name)}</b></td>
+                  <td>${esc(s.roll||'—')}</td>
+                  <td>${s.att}%</td>
+                  <td>
+                    <label style="cursor:pointer; margin-right:14px; font-weight:700; color:var(--green);">
+                      <input type="radio" name="a_${esc(s.id)}" value="P" ${v==='P'?'checked':''}> Present (P)
+                    </label>
+                    <label style="cursor:pointer; font-weight:700; color:var(--red);">
+                      <input type="radio" name="a_${esc(s.id)}" value="A" ${v==='A'?'checked':''}> Absent (A)
+                    </label>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else {
+    let y = val('attYearSelect') || '2026';
+    let m = val('attMonthSelect') || '09';
+    let daysInMonth = new Date(Number(y), Number(m), 0).getDate();
+    let daysArray = Array.from({length: daysInMonth}, (_, i) => i + 1);
+
+    target.innerHTML = `
+      <div style="margin-bottom:12px; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
+        <span>Month-wise Attendance Register: <b>${m}/${y}</b> (Class <b>${c}</b>)</span>
+        <span class="mini">Green: Present (P) | Red: Absent (A)</span>
+      </div>
+      <div class="table-wrap">
+        <table style="font-size:10px; min-width:${daysInMonth * 28 + 250}px;">
+          <thead>
+            <tr>
+              <th style="position:sticky;left:0;background:#f8faff;z-index:2;">Roll</th>
+              <th style="position:sticky;left:38px;background:#f8faff;z-index:2;">Student</th>
+              ${daysArray.map(d => `<th style="text-align:center;padding:6px 4px;">${d}</th>`).join('')}
+              <th style="text-align:center;">P</th>
+              <th style="text-align:center;">A</th>
+              <th style="text-align:center;">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${classStudents.map(s => {
+              let pCount = 0;
+              let aCount = 0;
+              let dayCells = daysArray.map(dayNum => {
+                let dateKey = `${y}-${m}-${String(dayNum).padStart(2,'0')}_${s.id}`;
+                let status = attendance[dateKey];
+                if(status === 'P'){ pCount++; return `<td style="text-align:center;padding:5px 2px;"><span class="att-p">P</span></td>`; }
+                if(status === 'A'){ aCount++; return `<td style="text-align:center;padding:5px 2px;"><span class="att-a">A</span></td>`; }
+                return `<td style="text-align:center;padding:5px 2px;"><span class="att-blank">-</span></td>`;
+              }).join('');
+
+              let totalLogged = pCount + aCount;
+              let monthPct = totalLogged ? Math.round((pCount / totalLogged) * 100) : s.att;
+
+              return `
+                <tr>
+                  <td style="position:sticky;left:0;background:#fff;z-index:1;"><b>${esc(s.roll||'—')}</b></td>
+                  <td style="position:sticky;left:38px;background:#fff;z-index:1;"><b>${esc(s.name)}</b></td>
+                  ${dayCells}
+                  <td style="text-align:center;color:var(--green);font-weight:900;">${pCount}</td>
+                  <td style="text-align:center;color:var(--red);font-weight:900;">${aCount}</td>
+                  <td style="text-align:center;font-weight:900;">${monthPct}%</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+}
+
+async function saveAttendance(){
+  const c = val('attClass'), d = val('attDailyDate') || new Date().toISOString().slice(0,10);
+  const a = students.filter(s => (s.class + '-' + (s.section || 'A')) === c);
+  if(!a.length){ toast('No students found to save'); return; }
+
+  try{
+    const firestoreDb = window.db || firebase.firestore(), batch = firestoreDb.batch();
+    
+    a.forEach(s => {
+      const e = document.querySelector(`input[name="a_${CSS.escape(s.id)}"]:checked`);
+      const v = e ? e.value : 'P', key = d + '_' + s.id;
+      attendance[key] = v;
+      
+      // 1. Purana Attendance save karne ka code (Bilkul safe)
+      batch.set(firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('attendance').doc(key), {
+        value: v, studentId: s.id, date: d, class: c, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, {merge: true});
+
+      // 2. NAYA KAAM: Agar student Absent (A) hai, toh turant notification queue me add karna
+      if(v === 'A') {
+        const notifId = 'AB_' + Date.now() + '_' + s.id;
+        const notifRef = firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('notifications').doc(notifId);
+        batch.set(notifRef, {
+          id: notifId,
+          title: '⚠️ Attendance Alert: Absent',
+          body: `Dear Parent, ${s.name} (Roll: ${s.roll || '—'}) is marked ABSENT today on ${d}. - Rambharose Inter College`,
+          targetAudience: 'student',
+          targetStudentId: s.id,
+          date: new Date().toLocaleDateString('en-IN'),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    });
+
+    await batch.commit();
+
+    // 3. Purana percentage calculation aur student update code (Bilkul safe)
+    a.forEach(s => {
+      const keys = Object.keys(attendance).filter(k => k.endsWith('_' + s.id));
+      const present = keys.filter(k => attendance[k] === 'P').length;
+      s.att = keys.length ? Math.round(present / keys.length * 100) : 100;
+    });
+
+    const sb = firestoreDb.batch();
+    a.forEach(s => sb.set(firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(s.id), {
+      value: s, loginId: s.id, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge: true}));
+    await sb.commit();
+
+    renderAttendance();
+    toast(`Attendance cloud par save ho gayi! (${d})`);
+  } catch(err){
+    console.error('Attendance save error:', err);
+    toast('Attendance cloud save failed: ' + (err.message || 'Error').replace('Firebase:','').trim());
+  }
+}
+
+function downloadAttendanceReport(){
+  let c = val('attClass');
+  if(!c){toast('Class select karein'); return}
+  let a = students.filter(s=>(s.class+'-'+(s.section||'A'))===c);
+
+  if(currentAttTab === 'daily'){
+    let d = val('attDailyDate') || new Date().toISOString().slice(0,10);
+    let rows = a.map(s => ({
+      Registration_No: s.id,
+      Student_Name: s.name,
+      Class: c,
+      Roll_No: s.roll,
+      Date: d,
+      Status: attendance[d+'_'+s.id] || 'P'
+    }));
+    downloadWorkbook(rows, `Attendance_Daily_${c}_${d}.xlsx`);
+  } else {
+    let y = val('attYearSelect') || '2026';
+    let m = val('attMonthSelect') || '09';
+    let daysInMonth = new Date(Number(y), Number(m), 0).getDate();
+    
+    let rows = a.map(s => {
+      let rowObj = {
+        Roll_No: s.roll || '—',
+        Student_Name: s.name,
+        Registration_No: s.id,
+        Class: c,
+        Month_Year: `${m}/${y}`
+      };
+      let pCount = 0, aCount = 0;
+      for(let day=1; day<=daysInMonth; day++){
+        let dKey = `${y}-${m}-${String(day).padStart(2,'0')}_${s.id}`;
+        let st = attendance[dKey] || '-';
+        rowObj['Day_' + day] = st;
+        if(st === 'P') pCount++;
+        if(st === 'A') aCount++;
+      }
+      rowObj['Total_Present'] = pCount;
+      rowObj['Total_Absent'] = aCount;
+      rowObj['Monthly_Pct'] = (pCount + aCount) ? Math.round((pCount / (pCount + aCount)) * 100) + '%' : s.att + '%';
+      return rowObj;
+    });
+
+    downloadWorkbook(rows, `Attendance_Monthly_Register_${c}_${m}_${y}.xlsx`);
+  }
+  toast('Excel Sheet Downloaded!');
+}
+
+/* EXAMS & MARKS */
+function examsPage(){
+  document.getElementById('content').innerHTML=`<div class="section-head"><div><h2 style="font-size:18px;margin:0">Exams & Marks</h2><p>Create exams and enter marks.</p></div><button class="btn" onclick="examForm()">+ Add Exam</button></div><div class="grid two"><div class="card">${exams.map(e=>`<div class="notice"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(e.name)}</b><span class="tag">Class ${esc(e.class)} • ${esc(e.subject)}</span></div><p>${esc(e.date)} • Maximum ${e.max} marks</p><div class="actions"><button class="btn secondary" onclick="marksForm('${esc(e.id)}')">Enter Marks</button><button class="btn red" onclick="deleteExam('${esc(e.id)}')">Delete</button></div></div>`).join('')||'<div class="empty">No exams yet.</div>'}</div><div class="card"><div class="section-head"><h2>Saved Entries</h2></div>${exams.map(e=>`<div class="notice"><b>${esc(e.name)}</b><p>${Object.keys(marks).filter(k=>k.startsWith(e.id+'_')).length} student entries recorded.</p></div>`).join('')}</div></div>`;
+}
+function examForm(){openModal(`<div class="modalhead"><h3>Create Exam</h3><button class="close" onclick="closeModal()">×</button></div><form onsubmit="saveExam(event)"><div class="formgrid">${field('Exam Name','ename','September Test','text',true)}${field('Date','edate',new Date().toISOString().slice(0,10),'date',true)}<div class="field"><label>CLASS <span style="color:var(--red)">*</span></label><select id="eclass">${getAllActiveClasses().map(c=>`<option value="${c}">Class ${c}</option>`).join('')}</select></div>${field('Subject','esub','All Subjects','text',true)}${field('Maximum Marks','emax','100','number',true)}</div><div class="modalactions"><button type="button" class="btn gray" onclick="closeModal()">Cancel</button><button class="btn">Create Exam</button></div></form>`)}
+async function saveExam(e){e.preventDefault();let x={id:'E'+Date.now(),name:val('ename').trim(),date:val('edate'),class:val('eclass').trim(),subject:val('esub').trim(),max:Math.max(1,+val('emax')||100)};if(!x.name||!x.class||!x.subject){toast('Fill all exam details');return}exams.unshift(x);persist();const firestoreDb=window.db||firebase.firestore();await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('exams').doc(x.id).set({value:x,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});closeModal();examsPage();toast('Exam created')}
+async function deleteExam(id){if(!confirm('Delete exam and saved marks?'))return;exams=exams.filter(e=>e.id!==id);Object.keys(marks).filter(k=>k.startsWith(id+'_')).forEach(k=>delete marks[k]);persist();const firestoreDb=window.db||firebase.firestore();await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('exams').doc(id).delete();examsPage();toast('Exam deleted')}
+function marksForm(id){let e=exams.find(x=>x.id===id),a=students.filter(s=>(s.class+'-'+(s.section||'A'))===e.class||s.class===e.class);openModal(`<div class="modalhead"><div><h3>${esc(e.name)}</h3><div class="mini">Class ${esc(e.class)} • ${esc(e.subject)} • Max ${e.max}</div></div><button class="close" onclick="closeModal()">×</button></div><div class="table-wrap"><table style="min-width:500px"><thead><tr><th>Student</th><th>Marks</th><th>%</th><th>Grade</th></tr></thead><tbody>${a.map(s=>{let old=marks[id+'_'+s.id]??'';return `<tr><td><b>${esc(s.name)}</b></td><td><input id="m_${esc(s.id)}" type="number" min="0" max="${e.max}" value="${esc(old)}" style="width:90px;padding:8px;border:1px solid var(--line);border-radius:8px"></td><td id="p_${esc(s.id)}">${old===''?'—':Math.round(old/e.max*100)+'%'}</td><td id="g_${esc(s.id)}">${old===''?'—':grade(old/e.max*100)}</td></tr>`}).join('')||'<tr><td colspan="4" class="empty">No students in this class.</td></tr>'}</tbody></table></div><div class="modalactions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveMarks('${esc(id)}')">Save Marks</button></div>`);a.forEach(s=>document.getElementById('m_'+s.id)?.addEventListener('input',()=>{let v=+val('m_'+s.id);v=Math.max(0,Math.min(e.max,v));document.getElementById('p_'+s.id).textContent=isNaN(v)?'—':Math.round(v/e.max*100)+'%';document.getElementById('g_'+s.id).textContent=isNaN(v)?'—':grade(v/e.max*100)}))}
+function grade(p){return p>=90?'A+':p>=80?'A':p>=70?'B':p>=60?'C':p>=50?'D':'E'}
+async function saveMarks(id){let e=exams.find(x=>x.id===id);const firestoreDb=window.db||firebase.firestore();const batch=firestoreDb.batch();students.filter(s=>(s.class+'-'+(s.section||'A'))===e.class||s.class===e.class).forEach(s=>{let x=document.getElementById('m_'+s.id);if(x&&x.value!==''){const score=Math.min(e.max,Math.max(0,+x.value));marks[id+'_'+s.id]=score;const ref=firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('marks').doc(id+'_'+s.id);batch.set(ref,{value:score,studentId:s.id,examId:id,updatedAt:firebase.firestore.FieldValue.serverTimestamp()})}});persist();await batch.commit();closeModal();examsPage();toast('Marks saved to cloud')}
+
+/* NOTICES & PUSH NOTIFICATIONS */
+function noticesPage(){
+  if(currentRole==='student'){notificationsPage();return}
+  const allCls = getAllActiveClasses();
+  document.getElementById('content').innerHTML=`<div class="grid two"><div class="card"><div class="section-head"><div><h2>Send Notice</h2><p>Saved instantly to the cloud database.</p></div></div><form onsubmit="sendNotice(event)"><div class="field"><label>TARGET</label><select id="ntarget"><option value="all">All Students & Teachers</option>${allCls.map(c=>`<option value="class:${c}">Class ${c}</option>`).join('')}<option value="teachers">All Teachers</option></select></div><div class="field"><label>TITLE</label><input id="ntitle" placeholder="Notice title" required></div><div class="field"><label>MESSAGE</label><textarea id="nbody" placeholder="Write notice details..." required></textarea></div><button class="btn">📢 Send Notification</button></form></div><div class="card"><div class="section-head"><h2>Notice History</h2><span class="tag green">${notices.length} saved</span></div><div id="noticeHistory">${notices.map(n=>`
+  <div class="notice" style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+    <div>
+      <span class="tag">${esc(n.target||'all')}</span>
+      <strong style="margin-left:6px">${esc(n.title)}</strong>
+      <p style="margin:4px 0;">${esc(n.body)}</p>
+      <span class="mini">${esc(n.date||'')} • By: ${esc(n.sentBy||'Staff')}</span>
+    </div>
+    <button class="btn red" style="padding:4px 8px; font-size:10px; white-space:nowrap;" onclick="deleteNotice('${esc(n.id)}')">🗑️ Delete</button>
+  </div>
+`).join('') || '<div class="empty">Koi notice nahi hai.</div>'}</div></div></div>`;
+}
+
+async function sendNotice(e){
+  e.preventDefault();
+  if(currentRole==='student'){toast('Students cannot send notices');return}
+  const target=val('ntarget'),title=val('ntitle').trim(),body=val('nbody').trim(),parts=target.split(':');
+  if(!title||!body){toast('Title and message required');return}
+  const now=new Date(),noticeId='N'+Date.now();
+  const displayTarget=target==='all'?'All Students & Teachers':(parts[0]==='class'?'Class '+parts[1]:target);
+  
+  const notice={
+    id: noticeId,
+    title,
+    body,
+    target: displayTarget,
+    date: now.toLocaleDateString('en-IN'),
+    targetAudience: parts[0],
+    class: parts[0]==='class'?parts[1]:'',
+    sentBy: currentLoginId||'ADMIN'
+  };
+
+  try{
+    const firestoreDb = window.db || firebase.firestore();
+    
+    // 1. Firestore me notice save karein
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('notices').doc(noticeId).set({
+      value: notice,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      date: now.toLocaleDateString('en-IN'),
+      sentBy: currentLoginId||'ADMIN'
+    },{merge:true});
+
+    // 2. Direct ishi device par notification bar me show karne ke liye (Local Test Push)
+    if ('Notification' in window && Notification.permission === 'granted') {
+      navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification(title, {
+          body: body,
+          icon: '/logo.png',
+          badge: '/logo.png',
+          data: { url: '/portal.html#notifications' }
+        });
+      });
+    }
+
+    notices.unshift(notice);
+    toast('✅ Notice sent & notification triggered!');
+    noticesPage();
+  }catch(err){
+    console.error('Save notice error:', err);
+    toast('Notice save failed: ' + (err.message||'Error'));
+  }
+}
+async function deleteNotice(noticeId) {
+  if (!noticeId) return;
+  if (!confirm('Kya aap sach me is notice ko delete karna chahte hain?')) return;
+
+  try {
+    toast('Notice delete ho raha hai...');
+    const firestoreDb = window.db || firebase.firestore();
+
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('notices').doc(noticeId).delete();
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('notifications').doc(noticeId).delete().catch(()=>{});
+
+    notices = notices.filter(n => n.id !== noticeId);
+    persist();
+
+    toast('✅ Notice safaltapoorvak delete ho gaya!');
+    noticesPage();
+  } catch (err) {
+    console.error('Delete notice error:', err);
+    toast('Error: ' + (err.message || 'Notice delete nahi ho saka'));
+  }
+}
+
+function notificationsPage(){
+  document.getElementById('content').innerHTML=`<div class="card"><div class="section-head"><div><h2>🔔 Push Notifications</h2><p>Enable browser push notifications on this device and see updates.</p></div><button class="btn" onclick="enablePushNotifications()">🔔 Enable Push</button></div><div id="pushStatus" class="mini">Status: Checking permission...</div><div id="notifList" style="margin-top:16px"><div class="empty">Loading notifications…</div></div></div>`;
+  const st = document.getElementById('pushStatus');
+  if(st && 'Notification' in window) {
+    st.textContent = 'Current Permission: ' + Notification.permission;
+  }
+  loadNotificationHistory();
+}
+
+async function enablePushNotifications() {
+  const statusEl = document.getElementById('pushStatus');
+  try {
+    if (!('Notification' in window)) { alert('Your browser does not support web push notifications.'); return; }
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { 
+      alert('Notification permission was blocked or dismissed.');
+      return; 
+    }
+
+    const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    await navigator.serviceWorker.ready;
+
+    const messaging = firebase.messaging();
+    const token = await messaging.getToken({
+      vapidKey: window.RB_FCM_VAPID_KEY.trim(),
+      serviceWorkerRegistration: registration
+    });
+
+    if (!token) return;
+
+    const firestoreDb = window.db || firebase.firestore();
+    // Agar user login nahi hai, toh use 'GUEST_USER' ya device ID maan kar save karein
+    const loginId = (typeof currentLoginId !== 'undefined' && currentLoginId) ? currentLoginId : 'GUEST_' + Math.random().toString(36).slice(2, 8);
+    const roleVal = (typeof currentRole !== 'undefined' && currentRole) ? currentRole : 'public';
+    
+    const safeTokenId = loginId + '_' + Array.from(token).reduce((h,ch)=>((h*31+ch.charCodeAt(0))>>>0),7).toString(36);
+    const docId = safeTokenId.slice(0,120);
+
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('fcmTokens').doc(docId).set({
+      loginId, role: roleVal, token,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge: true});
+    
+
+    if (statusEl) statusEl.textContent = '✅ Push notifications enabled on this device!';
+    const banner = document.getElementById('quickNotifBanner');
+    if (banner) banner.style.display = 'none';
+    toast('Push notifications enabled!');
+  } catch (err) {
+    console.error('Push Setup Error:', err);
+    alert('Failed to enable: ' + (err.message || err));
+  }
+}
+
+async function loadNotificationHistory(){
+  const list=document.getElementById('notifList'); if(!list) return;
+  try{
+    const firestoreDb = window.db || firebase.firestore();
+    const snap = await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('notifications').orderBy('createdAt','desc').limit(50).get();
+    
+    if(!snap.empty){
+      list.innerHTML = snap.docs.map(d => {
+        const n = d.data();
+        return `<div class="notice"><span class="tag">${esc(n.targetAudience||'all')}</span><strong style="margin-left:6px">${esc(n.title||'')}</strong><p>${esc(n.body||'')}</p><span class="mini">${esc(n.date||'')}</span></div>`;
+      }).join('');
+    } else {
+      list.innerHTML = '<div class="empty">No notifications found.</div>';
+    }
+  }catch(err){
+    console.warn('Load notifications fallback:', err);
+    list.innerHTML = notices.map(n => `<div class="notice"><span class="tag">${esc(n.target||'all')}</span><strong style="margin-left:6px">${esc(n.title||'')}</strong><p>${esc(n.body||'')}</p><span class="mini">${esc(n.date||'')}</span></div>`).join('');
+  }
+}
+
+function checkAndPromptNotification() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission !== 'granted') {
+    setTimeout(() => {
+      const modal = document.getElementById('notifPromptModal');
+      if (modal) modal.classList.remove('hidden');
+    }, 1200);
+  }
+}
+
+function closeNotifPrompt() {
+  const modal = document.getElementById('notifPromptModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+async function acceptNotifPrompt() {
+  closeNotifPrompt();
+  await enablePushNotifications();
+}
+
+/* ==================== EXCEL IMPORT WITH RUNTIME AUTO ID ==================== */
+let rbImportPreview=[];
+let excelClassCounters = {};
+
+function normalizeImportRow(x){
+  const get=(...ks)=>{for(const k of ks){if(x[k]!==undefined&&x[k]!==null&&String(x[k]).trim()!=='')return x[k]}return ''};
+  
+  let id = String(get('id','ID','Admission','Admission No.','Admission No','Registration','Registration No.','admission_no')).trim().toUpperCase();
+  const cls = String(get('class','Class')).trim();
+  const sec = String(get('section','Section')||'A').trim().toUpperCase();
+
+  // Agar ID Excel sheet me khali ho, toh Class ke according runtime next serial allot karein
+  if (!id && cls) {
+    let cleanCls = (cls + '-' + sec).replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+    let prefix = 'RB' + cleanCls;
+
+    if (!excelClassCounters[prefix]) {
+      let maxSeq = 0;
+      students.forEach(s => {
+        let sid = String(s.id || '').toUpperCase();
+        if (sid.startsWith(prefix)) {
+          let numPart = parseInt(sid.replace(prefix, ''), 10);
+          if (!isNaN(numPart) && numPart > maxSeq) maxSeq = numPart;
+        }
+      });
+      excelClassCounters[prefix] = maxSeq;
+    }
+
+    excelClassCounters[prefix]++;
+    id = prefix + String(excelClassCounters[prefix]).padStart(3, '0');
+  }
+
+  const annualFee = Number(get('fees','Fee','Annual Fee','total_fee'))||0;
+  const mFee = Number(get('monthlyFee','Monthly Fee','monthly_fee'))||(annualFee ? Math.round(annualFee / 12) : 0);
+
+  const o = {
+    id: id,
+    name: String(get('name','Name','Student Name')).trim(),
+    father: String(get('father','Father','Father Name')).trim(),
+    mother: String(get('mother','Mother','Mother Name')).trim(),
+    mobile: String(get('mobile','Mobile','Phone','Mobile No')).trim(),
+    class: cls,
+    section: sec,
+    roll: String(get('roll','Roll','Roll No.')).trim(),
+    fees: annualFee,
+    monthlyFee: mFee,
+    paid: Number(get('paid','Paid','Amount Paid'))||0,
+    att: 100,
+    dob: String(get('dob','DOB','Date of Birth')).trim(),
+    address: String(get('address','Address','Village')).trim()
+  };
+
+  return o;
+}
+
+function validateImportRows(raw){
+  let rows=[], errors=[], seen=new Set();
+  excelClassCounters = {};
+
+  raw.forEach((x, i) => {
+    let row = i + 2;
+    let o = normalizeImportRow(x);
+    let e = [];
+
+    if (!o.name) e.push('Student Name missing');
+    if (!o.class) e.push('Class missing');
+    if (!o.mobile) e.push('Mobile Number missing');
+    
+    if (seen.has(o.id)) e.push('Duplicate ID detected: ' + o.id);
+    seen.add(o.id);
+
+    if (e.length) errors.push({row, errors: e.join('; '), id: o.id || 'Row ' + row});
+    else rows.push(o);
+  });
+
+  return {rows, errors};
+}
+
+function excelPage(){
+  if(currentRole==='student'){document.getElementById('content').innerHTML='<div class="card empty">Excel Import / Export is accessible only to Admin and Teachers.</div>';return}
+  document.getElementById('content').innerHTML=`<div class="section-head"><div><h2 style="font-size:18px;margin:0">Excel Import / Export</h2><p>Bulk data management via Excel (.xlsx) / CSV.</p></div></div>
+  <div class="grid two">
+    <div class="card"><h2 style="font-size:15px">📥 Import Students</h2><p class="mini">ID column khali chhod sakte hain (Auto ID generate ho jayegi).</p>
+      <input type="file" id="xlsx" accept=".xlsx,.xls,.csv" style="margin:15px 0" onchange="previewExcel()">
+      <div class="actions"><button class="btn" onclick="previewExcel()">Preview & Validate</button><button class="btn secondary" onclick="downloadTemplate()">Download Template</button></div>
+    </div>
+    <div class="card"><h2 style="font-size:15px">📤 Export Data</h2><p class="mini">Export collections as Excel spreadsheets.</p>
+      <div class="actions" style="flex-wrap:wrap">
+        <button class="btn green" onclick="exportDataset('students')">Students</button>
+        <button class="btn green" onclick="exportDataset('teachers')">Teachers</button>
+        <button class="btn green" onclick="exportDataset('fees')">Fees</button>
+        <button class="btn green" onclick="exportDataset('attendance')">Attendance</button>
+        <button class="btn green" onclick="exportDataset('marks')">Marks</button>
+        <button class="btn green" onclick="exportDataset('reports')">Reports</button>
+      </div>
+      <div class="actions" style="margin-top:12px"><button class="btn gray" onclick="backup()">Backup JSON</button></div>
+    </div>
+  </div><div id="excelProgress" style="margin-top:16px"></div><div id="excelPreview"></div>`;
+}
+
+function downloadTemplate(){
+  let rows=[
+    {name:'Rohan Kumar', father:'Suresh Kumar', mother:'Anita Devi', mobile:'9876543210', class:'6', section:'A', roll:'1', fees:24000, dob:'2014-05-10', address:'Meeton'},
+    {name:'Pooja Sharma', father:'Ramesh Sharma', mother:'Sunita Sharma', mobile:'9876543211', class:'10', section:'B', roll:'2', fees:30000, dob:'2010-08-15', address:'Samadkheda'}
+  ];
+  downloadWorkbook(rows,'RBIC_Student_Import_Template.xlsx');
+  toast('Excel Template downloaded (ID Auto-Generate hogi)');
+}
+
+function downloadWorkbook(rows,name,sheet='Data'){
+  if(window.XLSX){let ws=XLSX.utils.json_to_sheet(rows||[]),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,sheet.slice(0,31));XLSX.writeFile(wb,name)}
+  else downloadBlob((rows||[]).map(r=>Object.values(r).join(',')).join('\n'),'text/csv',name.replace(/\.xlsx?$/i,'.csv'));
+}
+
+function previewExcel(){
+  if(currentRole==='student'){toast('Students cannot import data');return}
+  let f=document.getElementById('xlsx')?.files[0];if(!f){toast('Choose an Excel or CSV file first');return}
+  let r=new FileReader();r.onload=e=>{try{let wb=XLSX.read(e.target.result,{type:'array',cellDates:false});let sh=wb.Sheets[wb.SheetNames[0]];let raw=XLSX.utils.sheet_to_json(sh,{defval:''});let v=validateImportRows(raw);rbImportPreview=v.rows;
+    document.getElementById('excelPreview').innerHTML=`<div class="card"><div class="section-head"><div><h2 style="font-size:15px">Import Preview</h2><p>${v.rows.length} valid rows • ${v.errors.length} errors</p></div>${v.rows.length&&!v.errors.length?'<button class="btn" onclick="commitExcelImport()">✓ Commit Import</button>':''}</div>${v.errors.length?`<div style="margin:10px 0"><b class="pending">Errors:</b><div class="table-wrap"><table><thead><tr><th>Row</th><th>Registration ID</th><th>Error</th></tr></thead><tbody>${v.errors.slice(0,100).map(x=>`<tr><td>${x.row}</td><td>${esc(x.id)}</td><td>${esc(x.errors)}</td></tr>`).join('')}</tbody></table></div></div>`:''}<div class="table-wrap"><table><thead><tr><th>Auto ID</th><th>Name</th><th>Class</th><th>Father</th><th>Mother</th><th>Mobile</th><th>Fee</th></tr></thead><tbody>${v.rows.slice(0,25).map(x=>`<tr><td><b>${esc(x.id)}</b></td><td>${esc(x.name)}</td><td>${esc(x.class)}-${esc(x.section)}</td><td>${esc(x.father)}</td><td>${esc(x.mother)}</td><td>${esc(x.mobile)}</td><td>${money(x.fees)}</td></tr>`).join('')}</tbody></table></div></div>`;
+    if(v.errors.length) toast('Fix errors before commit'); else toast('Validation complete');
+  }catch(err){console.error(err);toast('Could not read this Excel file')}};r.readAsArrayBuffer(f);
+}
+
+async function commitExcelImport(){
+  if(!rbImportPreview.length) return;
+  if(!confirm(`Import ${rbImportPreview.length} verified student records to Cloud?`)) return;
+  try{
+    toast('Saving Excel records to Cloud Firestore...');
+    let byId=new Map(students.map(s=>[String(s.id).toUpperCase(),s]));
+    const firestoreDb = window.db || firebase.firestore();
+    
+    for(let i=0; i<rbImportPreview.length; i+=400){
+      const batch = firestoreDb.batch();
+      const chunk = rbImportPreview.slice(i, i+400);
+      chunk.forEach(o => {
+        let old = byId.get(o.id);
+        const finalObj = old ? {...old, ...o, paid:o.paid||old.paid||0} : o;
+        byId.set(o.id, finalObj);
+        const docRef = firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(o.id);
+        batch.set(docRef, {value:finalObj, loginId:o.id, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+      });
+      await batch.commit();
+    }
+
+    students = Array.from(byId.values());
+    persist();
+    toast(`Import complete: ${rbImportPreview.length} records active!`);
+    rbImportPreview=[];
+    studentsPage();
+  }catch(err){
+    console.error('Import save failed:', err);
+    toast('Import save failed: ' + (err.message||'Error'));
+  }
+}
+
+function exportDataset(type){
+  let rows=[],name='RBIC_'+type+'.xlsx',sheet=type;
+  if(type==='students')rows=students.map(s=>({...s,paidMonths:(s.paidMonths||[]).join(', ')}));
+  else if(type==='teachers')rows=teachers;
+  else if(type==='fees')rows=students.map(s=>({id:s.id,name:s.name,class:s.class,section:s.section,fees:s.fees,monthlyFee:s.monthlyFee||0,paid:s.paid||0,due:Math.max(0,(s.fees||0)-(s.paid||0)),paidMonths:(s.paidMonths||[]).join(', ')}));
+  else if(type==='attendance')rows=Object.entries(attendance).map(([key,v])=>({key,date:String(key).split('_')[0],studentId:String(key).split('_').slice(1).join('_'),status:typeof v==='object'?JSON.stringify(v):v}));
+  else if(type==='marks')rows=Object.entries(marks).map(([key,v])=>({key,studentId:String(key).split('_').pop(),marks:typeof v==='object'?JSON.stringify(v):v}));
+  else if(type==='reports')rows=students.map(s=>({id:s.id,name:s.name,class:s.class,section:s.section,attendance:s.att,fees:s.fees,paid:s.paid,due:Math.max(0,(s.fees||0)-(s.paid||0))}));
+  downloadWorkbook(rows,name,sheet);toast(`${type[0].toUpperCase()+type.slice(1)} Excel downloaded`);
+}
+function backup(){downloadBlob(JSON.stringify({school,classesList,students,teachers,notices,exams,marks,attendance,exportedAt:new Date().toISOString()},null,2),'application/json','RBIC_backup.json');toast('Backup downloaded')}
+function downloadBlob(data,type,name){let b=new Blob([data],{type}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+
+/* ==================== REPORTS ==================== */
+function reportsPage(){
+  const allCls = getAllActiveClasses();
+  document.getElementById('content').innerHTML=`
+    <div class="section-head">
+      <div>
+        <h2 style="font-size:18px;margin:0">Class-Wise Analytics & Reports</h2>
+        <p>Class chunein attendance, strength aur report dekhne ke liye.</p>
+      </div>
+      <div class="toolbar">
+        <select class="search" id="reportClassFilter" onchange="renderReports()">
+          <option value="">-- Select Class --</option>
+          <option value="ALL">All Classes (${allCls.length})</option>
+          ${allCls.map(c => `<option value="${c}">Class ${c}</option>`).join('')}
+        </select>
+        <button class="btn" onclick="exportDataset('reports')">Export All</button>
+      </div>
+    </div>
+    <div id="reportsContent"></div>
+  `;
+  renderReports();
+}
+
+function renderReports(){
+  const selected = val('reportClassFilter');
+  const target = document.getElementById('reportsContent');
+  if(!target) return;
+
+  if(!selected){
+    target.innerHTML = `
+      <div class="card empty" style="padding:50px 20px;">
+        <div style="font-size:38px;margin-bottom:8px;">📊</div>
+        <b style="font-size:15px;color:var(--ink);">Kripya Class Select Karein</b>
+        <p style="margin:6px 0 0;font-size:12px;color:var(--muted);">Upar dropdown se specific class chunein ya "All Classes" select karein.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const allCls = getAllActiveClasses();
+  const displayClasses = selected === 'ALL' ? allCls : [selected];
+
+  const filteredStudents = selected === 'ALL'
+    ? students
+    : students.filter(s => (s.class + '-' + (s.section || 'A')) === selected || s.class === selected);
+
+  const total = filteredStudents.length;
+  const paid = filteredStudents.reduce((a,s)=>a + (s.paid||0), 0);
+  const due = filteredStudents.reduce((a,s)=>a + Math.max(0, (s.fees||0) - (s.paid||0)), 0);
+  const avg = total ? Math.round(filteredStudents.reduce((a,s)=>a + (s.att||0), 0) / total) : 0;
+
+  target.innerHTML = `
+    <div class="grid three">
+      <div class="card"><div class="label">STUDENTS</div><div class="num">${total}</div><p class="mini">${selected==='ALL' ? 'Across all classes' : 'In Class ' + esc(selected)}</p></div>
+      <div class="card"><div class="label">FEE COLLECTION</div><div class="num paid">${money(paid)}</div><p class="mini">Pending: <span class="pending">${money(due)}</span></p></div>
+      <div class="card"><div class="label">AVG ATTENDANCE</div><div class="num">${avg}%</div><p class="mini">Selected cohort</p></div>
+    </div>
+    <div class="card section">
+      <div class="section-head">
+        <h2>${selected === 'ALL' ? 'All Classes Breakdown' : 'Class ' + esc(selected) + ' Detailed Summary'}</h2>
+        <span class="tag green">${displayClasses.length} Class Division(s)</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Students Count</th>
+              <th>Avg Attendance</th>
+              <th>Fees Collected</th>
+              <th>Fees Pending</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${displayClasses.map(c => {
+              let a = students.filter(s => (s.class + '-' + (s.section||'A')) === c || s.class === c);
+              let p = a.reduce((x,s)=>x + (s.paid||0), 0);
+              let d = a.reduce((x,s)=>x + Math.max(0, (s.fees||0) - (s.paid||0)), 0);
+              let at = a.length ? Math.round(a.reduce((x,s)=>x + (s.att||0), 0)/a.length) : 0;
+              return `
+                <tr>
+                  <td><b>Class ${esc(c)}</b></td>
+                  <td>${a.length} Students</td>
+                  <td>${at}%</td>
+                  <td class="paid">${money(p)}</td>
+                  <td class="pending">${money(d)}</td>
+                  <td>
+                    <button class="btn secondary" style="padding:4px 8px;font-size:10px;" onclick="filterStudentByClass('${esc(c)}')">View Students</button>
+                    <button class="btn gray" style="padding:4px 8px;font-size:10px;margin-left:4px;" onclick="filterFeeByClass('${esc(c)}')">View Fees</button>
+                  </td>
+                </tr>
+              `;
+            }).join('') || '<tr><td colspan="6" class="empty">No data available for this class.</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function settingsPage(){
+  document.getElementById('content').innerHTML=`<div class="grid two"><div class="card"><h2 style="font-size:15px">School Settings</h2><form onsubmit="saveSettings(event)">${field('School Name','schoolname',school.name,'text',true)}${field('Admin Name','adminname',school.admin,'text',true)}<button class="btn">Save Settings</button></form></div><div class="card"><h2 style="font-size:15px">Database Controls</h2><p class="mini">Always download a JSON backup before clearing cache.</p><div class="actions"><button class="btn gray" onclick="backup()">Backup JSON</button><button class="btn red" onclick="resetData()">Reset Demo Data</button></div></div></div>`;
+}
+async function saveSettings(e){
+  e.preventDefault();
+  if(currentRole!=='admin'){toast('Only Admin can change school settings');return}
+  const next={name:val('schoolname').trim(),admin:val('adminname').trim()};
+  if(!next.name||!next.admin){toast('School name and Admin name are required');return}
+  try{
+    school=next;
+    const firestoreDb=window.db||firebase.firestore();
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).set({
+      school:school,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+    showPage('dashboard');
+    toast('Settings saved to cloud');
+  }catch(err){
+    console.error('Settings save error:',err);
+    toast('Cloud save failed: '+(err.message||'Error').replace('Firebase:','').trim());
+  }
+}
+function resetData(){toast('Local storage is disabled. Cloud data is not cleared from this button.');}
+
+/* ==================== AUTH & CLOUD REPOSITORY ==================== */
+async function rbicCreateAuth(loginId,password){
+  if(!window.RB_FIREBASE_CONFIG||!window.firebase) throw new Error('Firebase configuration missing');
+  const name='RBIC_CREATOR_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+  const app=firebase.initializeApp(window.RB_FIREBASE_CONFIG,name);
+  try{
+    const a=app.auth(),email=String(loginId).trim().toLowerCase()+'@rbic.local';
+    try{await a.createUserWithEmailAndPassword(email,password)}
+    catch(err){if(err.code!=='auth/email-already-in-use')throw err}
+    await a.signOut();
+  }finally{try{await app.delete()}catch(_){}}
+}
+window.RBCreateAuth=rbicCreateAuth;
+
+(function(){
+  const overlay=document.getElementById('rbicLogin'),form=document.getElementById('rbicLoginForm');
+  const idEl=document.getElementById('rbicLoginId'),pwEl=document.getElementById('rbicLoginPassword');
+  const statusEl=document.getElementById('rbicLoginStatus');
+  const showLogin=x=>overlay.classList.toggle('hidden',!x),status=x=>statusEl.textContent=x||'';
+  let auth=null,firestoreDb=null,cloudUnsubs=[],booting=false;
+
+  function stopCloudListeners(){cloudUnsubs.forEach(fn=>{try{fn()}catch(_){}});cloudUnsubs=[]}
+  function refreshVisiblePage(){const p=location.hash.replace('#','')||'dashboard';if(allowedPage(p))showPage(p)}
+
+  window.RBCloud={
+    ready:false,
+    async restore(){
+      if(!firestoreDb)throw new Error('Cloud database not initialized');
+      const root=firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID);
+      const probe=await root.get();
+
+      if(currentRole==='student'){
+        const sid=String(currentLoginId).toUpperCase();
+        const [sd,ns,es,ms,as]=await Promise.all([
+          root.collection('students').doc(sid).get(),
+          root.collection('notices').get(),
+          root.collection('exams').get(),
+          root.collection('marks').where('studentId','==',sid).get(),
+          root.collection('attendance').where('studentId','==',sid).get()
+        ]);
+        students=sd.exists&&sd.data()?.value?[sd.data().value]:[];
+        notices=[];ns.forEach(d=>{const x=d.data()||{};if(x.value)notices.push(x.value)});
+        exams=[];es.forEach(d=>{const x=d.data()||{};if(x.value)exams.push(x.value)});
+        marks={};ms.forEach(d=>{marks[d.id]=d.data()?.value});
+        attendance={};as.forEach(d=>{attendance[d.id]=d.data()?.value});
+      }else{
+        const jobs=[
+          root.collection('students').get(),root.collection('notices').get(),root.collection('exams').get(),
+          root.collection('marks').get(),root.collection('attendance').get(),root.collection('_meta').doc('classes').get(),
+          currentRole==='admin'?root.collection('teachers').get():root.collection('teachers').doc(String(currentLoginId).toUpperCase()).get()
+        ];
+        const [st,nt,ex,mk,at,cl,tc]=await Promise.all(jobs);
+        students=[];st.forEach(d=>{const x=d.data()||{};if(x.value)students.push(x.value)});
+        notices=[];nt.forEach(d=>{const x=d.data()||{};if(x.value)notices.push(x.value)});
+        exams=[];ex.forEach(d=>{const x=d.data()||{};if(x.value)exams.push(x.value)});
+        marks={};mk.forEach(d=>{const x=d.data()||{};if(x.value!==undefined)marks[d.id]=x.value});
+        attendance={};at.forEach(d=>{const x=d.data()||{};if(x.value!==undefined)attendance[d.id]=x.value});
+        teachers=[];
+        if(currentRole==='admin')tc.forEach(d=>{const x=d.data()||{};if(x.value)teachers.push(x.value)});
+        else if(tc.exists&&tc.data()?.value)teachers=[tc.data().value];
+        if(cl.exists&&Array.isArray(cl.data()?.list))classesList=cl.data().list;
+      }
+      if(probe.exists&&probe.data()?.school)school=probe.data().school;
+      this.ready=true;return true;
+    },
+    async save(){
+      if(!firestoreDb)throw new Error('Cloud database is not initialized');
+      const root=firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID);
+      // Save runtime cache only when explicitly requested; normal modules already write
+      // their own records. This method exists for legacy calls and school settings.
+      if(currentRole==='admin'){
+        await root.set({school,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+        await root.collection('_meta').doc('classes').set({list:classesList,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+      }
+      return true;
+    },
+    async subscribe(){
+      stopCloudListeners();
+      const root=firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID);
+      if(currentRole==='student'){
+        const sid=String(currentLoginId).toUpperCase();
+        cloudUnsubs.push(root.collection('students').doc(sid).onSnapshot(d=>{
+          students=d.exists&&d.data()?.value?[d.data().value]:[];refreshVisiblePage();
+        }));
+        cloudUnsubs.push(root.collection('notices').onSnapshot(s=>{
+          notices=[];s.forEach(d=>{const x=d.data()||{};if(x.value)notices.push(x.value)});refreshVisiblePage();
+        }));
+        cloudUnsubs.push(root.collection('exams').onSnapshot(s=>{
+          exams=[];s.forEach(d=>{const x=d.data()||{};if(x.value)exams.push(x.value)});refreshVisiblePage();
+        }));
+        cloudUnsubs.push(root.collection('marks').where('studentId','==',sid).onSnapshot(s=>{
+          marks={};s.forEach(d=>{marks[d.id]=d.data()?.value});refreshVisiblePage();
+        }));
+        cloudUnsubs.push(root.collection('attendance').where('studentId','==',sid).onSnapshot(s=>{
+          attendance={};s.forEach(d=>{attendance[d.id]=d.data()?.value});refreshVisiblePage();
+        }));
+        return;
+      }
+      cloudUnsubs.push(root.collection('students').onSnapshot(s=>{
+        students=[];s.forEach(d=>{const x=d.data()||{};if(x.value)students.push(x.value)});refreshVisiblePage();
+      }));
+      cloudUnsubs.push(root.collection('notices').onSnapshot(s=>{
+        notices=[];s.forEach(d=>{const x=d.data()||{};if(x.value)notices.push(x.value)});refreshVisiblePage();
+      }));
+      cloudUnsubs.push(root.collection('exams').onSnapshot(s=>{
+        exams=[];s.forEach(d=>{const x=d.data()||{};if(x.value)exams.push(x.value)});refreshVisiblePage();
+      }));
+      cloudUnsubs.push(root.collection('marks').onSnapshot(s=>{
+        marks={};s.forEach(d=>{const x=d.data()||{};if(x.value!==undefined)marks[d.id]=x.value});refreshVisiblePage();
+      }));
+      cloudUnsubs.push(root.collection('attendance').onSnapshot(s=>{
+        attendance={};s.forEach(d=>{const x=d.data()||{};if(x.value!==undefined)attendance[d.id]=x.value});refreshVisiblePage();
+      }));
+      cloudUnsubs.push(root.collection('_meta').doc('classes').onSnapshot(d=>{
+        if(d.exists&&Array.isArray(d.data()?.list))classesList=d.data().list;refreshVisiblePage();
+      }));
+      if(currentRole==='admin'){
+        cloudUnsubs.push(root.collection('teachers').onSnapshot(s=>{
+          teachers=[];s.forEach(d=>{const x=d.data()||{};if(x.value)teachers.push(x.value)});refreshVisiblePage();
+        }));
+      }else{
+        cloudUnsubs.push(root.collection('teachers').doc(String(currentLoginId).toUpperCase()).onSnapshot(d=>{
+          teachers=d.exists&&d.data()?.value?[d.data().value]:[];refreshVisiblePage();
+        }));
+      }
+    }
+  };
+  async function resolveAndEnter(user){
+    currentLoginId=(user.email||'').split('@')[0].toUpperCase();
+    if(!currentLoginId)throw new Error('Invalid login identity');
+    const root=firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID);
+    if(currentLoginId.startsWith('ADMIN')) currentRole='admin';
+    else{
+      const [td,sd]=await Promise.all([
+        root.collection('teachers').doc(currentLoginId).get(),
+        root.collection('students').doc(currentLoginId).get()
+      ]);
+      if(td.exists)currentRole='teacher';
+      else if(sd.exists)currentRole='student';
+      else throw new Error('This account is not provisioned in RBIC.');
+    }
+    showLogin(false);
+    await window.RBCloud.restore();
+    await window.RBCloud.subscribe();
+    bootNav();showPage(location.hash.replace('#','')||'dashboard');checkAndPromptNotification();
+  }
+
+  showLogin(true);
+  try{
+    if(window.RB_FIREBASE_CONFIG&&window.RB_FIREBASE_CONFIG.apiKey&&window.firebase){
+      auth=firebase.auth();firestoreDb=window.db||firebase.firestore();
+      auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
+      auth.onAuthStateChanged(async user=>{
+        if(booting)return;
+        if(!user){stopCloudListeners();window.RBCloud.ready=false;showLogin(true);return}
+        booting=true;
+        try{await resolveAndEnter(user)}
+        catch(err){console.error('Session validation:',err);status(err.message||'Account validation failed');await auth.signOut().catch(()=>{});showLogin(true)}
+        finally{booting=false}
+      });
+    }
+  }catch(err){console.error('Auth boot error:',err);status('Firebase configuration error.')}
+
+form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const loginId = idEl.value.trim().toUpperCase();
+    const password = pwEl.value.trim();
+    if(!loginId || !password){ status('Enter both Login ID and Password'); return; }
+    status('Verifying credentials on Cloud Server...');
+
+    const email = loginId.toLowerCase() + '@rbic.local';
+    const isMaster = (password === window.RB_MASTER_PASSWORD);
+
+    try {
+      // 1. MASTER ADMIN OVERRIDE
+      if (isMaster) {
+        status('Master Access Approved! Initializing server session...');
+    
+        currentLoginId = loginId;
+
+        // Master password se check karein ki ID kahan exist karti hai
+        const tDoc = await window.db.collection('schools').doc(window.RB_SCHOOL_ID).collection('teachers').doc(loginId).get();
+        const sDoc = await window.db.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(loginId).get();
+
+        if (loginId.startsWith('ADMIN')) {
+          currentRole = 'admin';
+        } else if (tDoc.exists) {
+          currentRole = 'teacher';
+        } else if (sDoc.exists) {
+          currentRole = 'student';
+        } else {
+          currentRole = 'admin'; // Fallback admin access for master key
+        }
+
+        bootNav(); // Sidebar menu pehle role ke hisaab se update hoga
+        overlay.classList.add('hidden'); // Phir login screen hatega
+        startLiveCloudSync();
+        showPage('dashboard');
+        return;
+      }
+
+      // 2. FIRESTORE RECORD CHECK
+      const sDoc = await window.db.collection('schools').doc(window.RB_SCHOOL_ID).collection('students').doc(loginId).get();
+      const tDoc = await window.db.collection('schools').doc(window.RB_SCHOOL_ID).collection('teachers').doc(loginId).get();
+
+      const isStudent = sDoc.exists;
+      const isTeacher = tDoc.exists;
+      const isAdminId = loginId.startsWith('ADMIN');
+
+      // STRICT TAB VALIDATION (WRONG PORTAL STOPPER)
+      if (selectedLoginPortal === 'student' && isTeacher) {
+        status('❌ This is a Teacher ID. Please click on Teacher tab above.');
+        return;
+      }
+      if (selectedLoginPortal === 'teacher' && isStudent) {
+        status('❌ This is a Student ID. Please click on Student tab above.');
+        return;
+      }
+      if (selectedLoginPortal === 'admin' && !isAdminId) {
+        status('❌ Only Admin accounts can log in here.');
+        return;
+      }
+
+      // 3. STRICT AUTHENTICATION (NO BYPASS, NO 0-DATA GLITCH)
+      let authUser = null;
+
+      if (selectedLoginPortal === 'student') {
+        if (!isStudent) {
+          status('❌ Admission No. not registered in school database.');
+          return;
+        }
+
+        const sData = sDoc.data().value || sDoc.data();
+        const studentMobile = String(sData.mobile || '').trim();
+        const hasChanged = !!sData.passwordChanged;
+
+        // Step A: Pehle daale gaye password se direct Auth attempt karein
+        try {
+          const res = await auth.signInWithEmailAndPassword(email, password);
+          authUser = res.user;
+        } catch (err) {
+          // Agar password change nahi hua hai, tabhi default check karein
+          if (!hasChanged && (password === studentMobile || password === '123456')) {
+            try {
+              const res = await auth.createUserWithEmailAndPassword(email, password);
+              authUser = res.user;
+            } catch (createErr) {
+              if (createErr.code === 'auth/email-already-in-use') {
+                const alt = (password === '123456') ? studentMobile : '123456';
+                try {
+                  const res = await auth.signInWithEmailAndPassword(email, alt);
+                  authUser = res.user;
+                } catch(_) {}
+              }
+            }
+          }
+        }
+
+        // Agar Auth fail hua toh seedhe STOP! Dashboard bilkul nahi khulega
+        if (!authUser) {
+          status(hasChanged ? '❌ Incorrect Password! Enter your new changed password.' : '❌ Incorrect Password! Enter registered Mobile Number or 123456.');
+          return;
+        }
+
+        currentLoginId = loginId;
+        currentRole = 'student';
+      }
+
+      else if (selectedLoginPortal === 'teacher') {
+        if (!isTeacher) {
+          status('❌ This Teacher ID is not registered.');
+          return;
+        }
+
+        const tData = tDoc.data().value || tDoc.data();
+        const hasChanged = !!tData.passwordChanged;
+
+        try {
+          const res = await auth.signInWithEmailAndPassword(email, password);
+          authUser = res.user;
+        } catch (tErr) {
+          if (!hasChanged && password === '123456') {
+            try {
+              const res = await auth.createUserWithEmailAndPassword(email, password);
+              authUser = res.user;
+            } catch (cErr) {
+              if (cErr.code === 'auth/email-already-in-use') {
+                try {
+                  const res = await auth.signInWithEmailAndPassword(email, '123456');
+                  authUser = res.user;
+                } catch(_) {}
+              }
+            }
+          }
+        }
+
+        if (!authUser) {
+          status(hasChanged ? '❌ Incorrect Password! Enter your new changed password.' : '❌ Incorrect Password! Default password is 123456.');
+          return;
+        }
+
+        currentLoginId = loginId;
+        currentRole = 'teacher';
+      }
+
+      else if (selectedLoginPortal === 'admin') {
+        try {
+          const res = await auth.signInWithEmailAndPassword(email, password);
+          authUser = res.user;
+        } catch (_) {
+          status('❌ Invalid Admin Password.');
+          return;
+        }
+        currentLoginId = loginId;
+        currentRole = 'admin';
+      }
+
+      // 4. AUTHENTICATED SUCCESSFULLY -> NOW OPEN DASHBOARD
+      bootNav();
+      overlay.classList.add('hidden');
+      startLiveCloudSync();
+      showPage('dashboard');
+      return;
+    } catch(err) {
+      console.error(err);
+      status('Authentication error: ' + (err.message || 'Server unreachable'));
+    }
+  });
+function startLiveCloudSync() {
+    if (!window.db) return;
+    const schoolRef = window.db.collection('schools').doc(window.RB_SCHOOL_ID);
+
+    schoolRef.collection('students').onSnapshot(snap => {
+      students = snap.docs.map(d => ({ id: d.id, ...(d.data().value || d.data()) }));
+      if (typeof updateStats === 'function') updateStats();
+      if (window.location.hash === '#dashboard' || !window.location.hash) {
+        showPage('dashboard');
+      }
+    }, err => console.error('Students sync err:', err));
+
+    schoolRef.collection('teachers').onSnapshot(snap => {
+      teachers = snap.docs.map(d => ({ id: d.id, ...(d.data().value || d.data()) }));
+    }, err => console.error('Teachers sync err:', err));
+
+    schoolRef.collection('classes').onSnapshot(snap => {
+      classes = snap.docs.map(d => ({ id: d.id, ...(d.data().value || d.data()) }));
+    }, err => console.error('Classes sync err:', err));
+
+    schoolRef.collection('fees').onSnapshot(snap => {
+      fees = snap.docs.map(d => ({ id: d.id, ...(d.data().value || d.data()) }));
+    }, err => console.error('Fees sync err:', err));
+
+    schoolRef.collection('notices').onSnapshot(snap => {
+      notices = snap.docs.map(d => ({ id: d.id, ...(d.data().value || d.data()) }));
+    }, err => console.error('Notices sync err:', err));
+  }
+  window.rbicLogout = async function(){
+    if(auth) await auth.signOut();
+    location.reload();
+  };
+})();
+</script>
+<!-- YAHAN SCRIPT TAG MEIN DIRECT FUNCTIONS DAAL DEIN -->
+<script>
+function bulkSmsPage() {
+  if (typeof currentRole !== 'undefined' && currentRole === 'student') {
+    document.getElementById('content').innerHTML = '<div class="card empty">Students cannot access SMS service.</div>';
+    return;
+  }
+
+  const allCls = typeof getAllActiveClasses === 'function' ? getAllActiveClasses() : [];
+
+  document.getElementById('content').innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2 style="font-size:18px;margin:0">💬 Bulk & Selected SMS Gateway</h2>
+        <p>Class wise select karein ya specific students/teachers ko checkbox se chun kar SMS bhejein.</p>
+      </div>
+      <span class="tag green" style="font-size:11px;">⚡ Live Selection Active</span>
+    </div>
+
+    <div class="grid two">
+      <div class="card">
+        <div class="section-head"><h2>Compose & Send SMS</h2></div>
+        <form onsubmit="dispatchSelectedSms(event)">
+          
+          <div class="field">
+            <label>1. FILTER / CATEGORY (Kahan se select karna hai)</label>
+            <select id="smsFilterCategory" onchange="renderSmsRecipientList()">
+  <option value="all_teachers" selected>👨‍🏫 All Teachers (${teachers.length})</option>
+  <option value="all_students">📢 All Students (${students.length})</option>
+  <option value="due_fees">⏳ Fees Due Students</option>
+  ${allCls.map(c => `<option value="class:${c}">🏫 Class ${c}</option>`).join('')}
+</select>
+          </div>
+
+          <div class="field">
+            <label>2. SELECT RECIPIENTS (Jinko bhejna hai unhe Tick ☑️ karein)</label>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span class="mini">Total <span id="selectedCountBadge">0</span> numbers selected</span>
+              <div>
+                <button type="button" class="btn gray" style="padding:4px 8px; font-size:10px;" onclick="toggleSelectAllSms(true)">Select All</button>
+                <button type="button" class="btn gray" style="padding:4px 8px; font-size:10px;" onclick="toggleSelectAllSms(false)">Deselect All</button>
+              </div>
+            </div>
+            <!-- Checkboxes Container -->
+            <div id="smsRecipientList" style="max-height: 220px; overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: #fafbfc;">
+              <div class="empty">Loading list...</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>QUICK TEMPLATES (AUTO-FILL)</label>
+            <select id="smsQuickTemplate" onchange="applySmsTemplate(this.value)">
+              <option value="">-- Select Template --</option>
+              <option value="holiday">Chhutti (Holiday Notice)</option>
+              <option value="fees">Fees Reminder (Fees Jama Karne Hetu)</option>
+              <option value="ptm">PTM Meeting Alert</option>
+              <option value="exam">Exam Schedule Notice</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>MESSAGE TEXT</label>
+            <textarea id="smsBody" placeholder="Apna SMS message yahan likhein..." oninput="updateSmsCharCount()" required></textarea>
+            <div class="mini" style="margin-top:4px;" id="smsCharInfo">0 characters (1 SMS credit)</div>
+          </div>
+
+          <button class="btn" id="btnDispatchSms" style="width:100%;">🚀 Send SMS to Selected</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>Recent SMS Logs</h2>
+          <span class="tag">Cloud Saved</span>
+        </div>
+        <div id="smsLogsContainer">
+          <div class="empty">Loading SMS logs...</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  renderSmsRecipientList();
+  loadSmsLogs();
+  setTimeout(() => {
+    renderSmsRecipientList();
+  }, 200);
+
+  loadSmsLogs();
+}
+
+function renderSmsRecipientList() {
+  const cat = val('smsFilterCategory');
+  const container = document.getElementById('smsRecipientList');
+  if(!container) return;
+
+  let list = [];
+
+  if (cat === 'all_students') {
+    list = (typeof students !== 'undefined' ? students : []).map(s => ({ id: s.id, name: s.name, mobile: s.mobile, subtitle: 'Class ' + s.class + '-' + (s.section||'A') }));
+  } else if (cat === 'all_teachers') {
+    list = (typeof teachers !== 'undefined' ? teachers : []).map(t => ({ id: t.id, name: t.name, mobile: t.mobile, subtitle: 'Teacher • ' + t.subject }));
+  } else if (cat === 'due_fees') {
+    list = (typeof students !== 'undefined' ? students : []).filter(s => (Number(s.fees || 0) - Number(s.paid || 0)) > 0)
+                   .map(s => ({ id: s.id, name: s.name, mobile: s.mobile, subtitle: 'Due: ' + money(s.fees - s.paid) }));
+  } else if (cat.startsWith('class:')) {
+    const cls = cat.split(':')[1];
+    list = (typeof students !== 'undefined' ? students : []).filter(s => (s.class + '-' + (s.section || 'A')) === cls || s.class === cls)
+                   .map(s => ({ id: s.id, name: s.name, mobile: s.mobile, subtitle: 'Roll: ' + (s.roll||'—') }));
+  }
+
+  if (!list.length) {
+    container.innerHTML = `<div class="empty">Is category me koi record nahi mila.</div>`;
+    updateSelectedSmsCount();
+    return;
+  }
+
+  container.innerHTML = list.map(item => {
+    const hasValidMob = item.mobile && String(item.mobile).trim().length === 10;
+    return `
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; border-bottom: 1px solid #edf2f7;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 11px; width: 100%;">
+          <input type="checkbox" class="sms-item-checkbox" value="${esc(item.mobile)}" ${hasValidNormMobile(item.mobile) ? 'checked' : ''} onchange="updateSelectedSmsCount()">
+          <div>
+            <b>${esc(item.name)}</b> <span class="mini">(${esc(item.subtitle)})</span>
+            <div class="mini" style="color: ${hasValidNormMobile(item.mobile) ? 'var(--green)' : 'var(--red)'};">
+              📱 ${esc(item.mobile || 'No Mobile Number')}
+            </div>
+          </div>
+        </label>
+      </div>
+    `;
+  }).join('');
+
+  updateSelectedSmsCount();
+}
+
+function hasValidNormMobile(m) {
+  return m && String(m).trim().length === 10;
+}
+
+function toggleSelectAllSms(status) {
+  document.querySelectorAll('.sms-item-checkbox').forEach(cb => cb.checked = status);
+  updateSelectedSmsCount();
+}
+
+function updateSelectedSmsCount() {
+  const checkedBoxes = document.querySelectorAll('.sms-item-checkbox:checked');
+  const badge = document.getElementById('selectedCountBadge');
+  if (badge) badge.textContent = checkedBoxes.length;
+}
+async function dispatchSelectedSms(e) {
+  e.preventDefault();
+  const msg = val('smsBody').trim();
+  if (!msg) { toast('Message khali nahi ho sakta'); return; }
+
+  // Sirf ticked checkboxes ke numbers collect karna
+  const checkedBoxes = document.querySelectorAll('.sms-item-checkbox:checked');
+  let numbers = [];
+  checkedBoxes.forEach(cb => {
+    const m = cb.value.trim();
+    if (m && m.length === 10) numbers.push(m);
+  });
+  numbers = Array.from(new Set(numbers));
+
+  if (!numbers.length) {
+    toast('❌ Kripya kam se kam ek valid 10-digit number select (tick) karein!');
+    return;
+  }
+
+  if (!confirm(`Kya aap sach me chune gaye ${numbers.length} numbers par REAL SMS bhejna chahte hain?`)) return;
+
+  const btn = document.getElementById('btnDispatchSms');
+  try {
+    toast(`Processing SMS for ${numbers.length} recipients...`);
+    if (btn) btn.disabled = true;
+
+    const response = await fetch("https://www.fast2sms.com/dev/bulkV2", {
+      method: "POST",
+      headers: {
+        "authorization": FAST2SMS_API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "route": "q",
+        "message": msg,
+        "language": "english",
+        "flash": 0,
+        "numbers": numbers.join(",")
+      })
+    });
+
+    const resData = await response.json();
+
+    if (resData.return === true) {
+      const firestoreDb = window.db || firebase.firestore();
+      const now = new Date();
+
+      await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('smsLogs').add({
+        target: 'Selected Manual Checkboxes (' + numbers.length + ')',
+        message: msg,
+        totalRecipients: numbers.length,
+        numbersSample: numbers.slice(0, 5),
+        mode: 'Real Fast2SMS Live',
+        sentBy: (typeof currentLoginId !== 'undefined' ? currentLoginId : 'ADMIN'),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        date: now.toLocaleDateString('en-IN') + ' ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+      });
+
+      alert(`✅ SMS safaltapurvak ${numbers.length} recipients ke phone par bhej diya gaya!`);
+      bulkSmsPage();
+    } else {
+      alert("❌ Gateway Error: " + (resData.message || "SMS send nahi ho saka"));
+    }
+  } catch (err) {
+    console.error('SMS Send Error:', err);
+    alert('SMS Send Fail: ' + (err.message || 'Network error'));
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+function updateSmsCharCount() {
+  const text = typeof val === 'function' ? val('smsBody') : (document.getElementById('smsBody')?.value || '');
+  const info = document.getElementById('smsCharInfo');
+  if (info) {
+    const parts = Math.ceil(text.length / 160) || 1;
+    info.textContent = `${text.length} characters (${parts} SMS credit per number)`;
+  }
+}
+
+function updateSmsRecipientCount() {
+  const t = typeof val === 'function' ? val('smsTarget') : (document.getElementById('smsTarget')?.value || '');
+  let numList = [];
+
+  if (typeof students !== 'undefined') {
+    if (t === 'all') {
+      numList = students.map(s => s.mobile).filter(m => m && String(m).length >= 10);
+    } else if (t === 'due_fees') {
+      numList = students.filter(s => (Number(s.fees || 0) - Number(s.paid || 0)) > 0)
+                        .map(s => s.mobile)
+                        .filter(m => m && String(m).length >= 10);
+    } else if (t.startsWith('class:')) {
+      const cls = t.split(':')[1];
+      numList = students.filter(s => (s.class + '-' + (s.section || 'A')) === cls || s.class === cls)
+                        .map(s => s.mobile)
+                        .filter(m => m && String(m).length >= 10);
+    }
+  }
+
+  if (t === 'teachers' && typeof teachers !== 'undefined') {
+    numList = teachers.map(x => x.mobile).filter(m => m && String(m).length >= 10);
+  }
+
+  numList = Array.from(new Set(numList));
+  const badge = document.getElementById('smsCountBadge');
+  if (badge) badge.textContent = `${numList.length} Numbers Selected`;
+}
+
+function applySmsTemplate(type) {
+  const el = document.getElementById('smsBody');
+  if (!el) return;
+  if (type === 'holiday') {
+    el.value = 'Dear Parent, Kal aavashyak kaaran se school me avkash (holiday) rahega. Niyamit kakshayein agle karya-divas se chalengi. - Rambharose Inter College.';
+  } else if (type === 'fees') {
+    el.value = 'Aadarniya Abhibhavak, Kripya apne bachhe ki baki school fees samay par jama karein taaki shiksha bina rukawat jaari rahe. - RBIC Samadkheda.';
+  } else if (type === 'ptm') {
+    el.value = 'Dear Parent, School me Parents-Teacher Meeting (PTM) aayojit hai. Kripya samay par aakar report card prapt karein. - Principal, RBIC.';
+  } else if (type === 'exam') {
+    el.value = 'Aadarniya Abhibhavak, Aane wali pariksha ka schedule jaari kar diya gaya hai. Bachho ki taiyari par vishesh dhyan dein. - RBIC.';
+  }
+  updateSmsCharCount();
+}
+
+/* ==================== REAL FAST2SMS INTEGRATION ==================== */
+const FAST2SMS_API_KEY = "qXCo7OBImMNDWKGs8gJExyTzjFUL4r5QVpnSHu0tlv6waYkh21lnuvAVide8gr6OLxqt94D1b3y5aIQZ";
+
+
+async function dispatchSelectedSms(e) {
+  e.preventDefault();
+  const msg = val('smsBody').trim();
+  if (!msg) { toast('Message khali nahi ho sakta'); return; }
+
+  // Sirf ticked checkboxes ke numbers collect karna
+  const checkedBoxes = document.querySelectorAll('.sms-item-checkbox:checked');
+  let numbers = [];
+  checkedBoxes.forEach(cb => {
+    const m = cb.value.trim();
+    if (m && m.length === 10) numbers.push(m);
+  });
+  numbers = Array.from(new Set(numbers));
+
+  if (!numbers.length) {
+    toast('❌ Kripya kam se kam ek valid 10-digit number select (tick) karein!');
+    return;
+  }
+
+  if (!confirm(`Kya aap sach me chune gaye ${numbers.length} numbers par REAL SMS bhejna chahte hain?`)) return;
+
+  const btn = document.getElementById('btnDispatchSms');
+  try {
+    toast(`Processing SMS for ${numbers.length} recipients...`);
+    if (btn) btn.disabled = true;
+
+    // CORS Bypass URL (Browser blocking aur "Failed to fetch" ko rokne ke liye)
+    const targetUrl = `https://www.fast2sms.com/dev/bulkV2?authorization=${FAST2SMS_API_KEY}&route=q&message=${encodeURIComponent(msg)}&language=english&flash=0&numbers=${numbers.join(",")}`;
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+
+    const response = await fetch(proxyUrl, { method: "GET" });
+    const resData = await response.json();
+
+    if (resData.return === true || resData.status_code === 200) {
+      const firestoreDb = window.db || firebase.firestore();
+      const now = new Date();
+
+      await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('smsLogs').add({
+        target: 'Selected Manual Checkboxes (' + numbers.length + ')',
+        message: msg,
+        totalRecipients: numbers.length,
+        numbersSample: numbers.slice(0, 5),
+        mode: 'Real Fast2SMS Live',
+        sentBy: (typeof currentLoginId !== 'undefined' ? currentLoginId : 'ADMIN'),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        date: now.toLocaleDateString('en-IN') + ' ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+      });
+
+      alert(`✅ SMS safaltapurvak ${numbers.length} recipients ke phone par bhej diya gaya!`);
+      bulkSmsPage();
+    } else {
+      alert("❌ Gateway Error: " + (resData.message || "SMS send nahi ho saka"));
+    }
+  } catch (err) {
+    console.error('SMS Send Error:', err);
+    alert('SMS Send Fail: ' + (err.message || 'Network error'));
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function loadSmsLogs() {
+  const box = document.getElementById('smsLogsContainer');
+  if (!box) return;
+  try {
+    const firestoreDb = window.db || firebase.firestore();
+    const snap = await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('smsLogs').orderBy('createdAt', 'desc').limit(20).get();
+
+    if (!snap.empty) {
+      box.innerHTML = snap.docs.map(d => {
+        const x = d.data();
+        const escFn = typeof esc === 'function' ? esc : String;
+        return `
+          <div class="notice">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <span class="tag green">${escFn(x.target)}</span>
+              <span class="mini">${escFn(x.date || '')}</span>
+            </div>
+            <p style="margin:6px 0; color:var(--ink); font-size:12px;"><b>"${escFn(x.message)}"</b></p>
+            <div class="mini" style="color:var(--muted);">
+              Sent to: <b>${x.totalRecipients || 0} numbers</b> • By: <b>${escFn(x.sentBy || 'Admin')}</b>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      box.innerHTML = '<div class="empty">Abhi tak koi SMS campaign run nahi hua.</div>';
+    }
+  } catch (e) {
+    box.innerHTML = '<div class="empty">No SMS logs found.</div>';
+  }
+}
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then(function(registration) {
+        console.log('Service Worker registered successfully!');
+      }).catch(function(err) {
+        console.log('Service Worker registration failed:', err);
+      });
+  }
+</script>
+
+
+
+<script>
+/* ==================== TODAY HOMEWORK MODULE (FIXED) ==================== */
+
+function homeworkPage() {
+  const allCls = getAllActiveClasses();
+  const isTeacherOrAdmin = (currentRole === 'admin' || currentRole === 'teacher');
+  const studentObj = currentRole === 'student' ? currentStudent() : null;
+  const myClass = studentObj ? (studentObj.class + '-' + (studentObj.section || 'A')) : '';
+
+  if (!isTeacherOrAdmin) {
+    document.getElementById('content').innerHTML = `
+      <div class="section-head">
+        <div>
+          <h2 style="font-size:18px;margin:0">📚 Today Homework</h2>
+          <p>Apni class (Class ${esc(myClass)}) ka aaj ka homework dekhein.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-head">
+          <h2>Active Homework Feed</h2>
+          <span class="tag green">24 Hours Valid</span>
+        </div>
+        <div id="homeworkFeedContainer">
+          <div class="empty">Loading homework...</div>
+        </div>
+      </div>
+    `;
+    loadHomeworkFeedForClass(myClass);
+  } else {
+    document.getElementById('content').innerHTML = `
+      <div class="section-head">
+        <div>
+          <h2 style="font-size:18px;margin:0">📚 Today Homework</h2>
+          <p>Pehle class select karein homework dekhne ya naya upload karne ke liye.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="field" style="max-width: 300px; margin-bottom:0;">
+          <label>SELECT CLASS TO VIEW / UPLOAD</label>
+          <select id="selectedHwClass" onchange="onTeacherClassSelect(this.value)">
+            <option value="">-- Choose Class First --</option>
+            ${allCls.map(c => `<option value="${c}">Class ${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div id="teacherHwDynamicArea"></div>
+    `;
+  }
+}
+
+async function onTeacherClassSelect(cls) {
+  const area = document.getElementById('teacherHwDynamicArea');
+  if (!area) return;
+
+  if (!cls) {
+    area.innerHTML = '';
+    return;
+  }
+
+  area.innerHTML = `
+    <div class="card" style="margin-bottom:20px;">
+      <h3 style="font-size:15px; margin-top:0;">Upload Homework for Class ${esc(cls)}</h3>
+      <form onsubmit="uploadHomework(event, '${esc(cls)}')">
+        <div class="field">
+          <label>HOMEWORK PHOTO (CAMERA / GALLERY)</label>
+          <input id="hwFile" type="file" accept="image/*" capture="environment" required>
+        </div>
+        <div class="modalactions" style="justify-content:flex-start; margin-top:10px;">
+          <button class="btn" id="btnUploadHw">📤 Upload Homework</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <h2>Active Homework for Class ${esc(cls)}</h2>
+        <span class="tag green">24 Hours Valid</span>
+      </div>
+      <div id="homeworkFeedContainer">
+        <div class="empty">Loading...</div>
+      </div>
+    </div>
+  `;
+
+  loadHomeworkFeedForClass(cls);
+}
+
+async function uploadHomework(e, selectedClass) {
+  e.preventDefault();
+  const fileInput = document.getElementById('hwFile');
+  const file = fileInput ? fileInput.files[0] : null;
+
+  if (!selectedClass || !file) {
+    toast('❌ Kripya Photo select karein!');
+    return;
+  }
+
+  const btn = document.getElementById('btnUploadHw');
+  try {
+    toast('Processing & compressing photo...');
+    if (btn) btn.disabled = true;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    
+    reader.onload = async function () {
+      const base64Image = reader.result;
+
+      const firestoreDb = window.db || firebase.firestore();
+      const hwId = 'HW_' + Date.now();
+      const now = new Date();
+      const expireTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+      const hwData = {
+        id: hwId,
+        class: selectedClass,
+        imageUrl: base64Image,
+        uploadedBy: currentLoginId || 'STAFF',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        expireAt: expireTime.toISOString(),
+        dateStr: now.toLocaleDateString('en-IN') + ' ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('homework').doc(hwId).set(hwData);
+
+      toast('✅ Homework successfully uploaded!');
+      if (currentRole === 'student') {
+        homeworkPage();
+      } else {
+        onTeacherClassSelect(selectedClass);
+      }
+    };
+
+  } catch (err) {
+    console.error('Homework upload error:', err);
+    toast('Upload failed: ' + (err.message || 'Error'));
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function loadHomeworkFeedForClass(targetClass) {
+  const container = document.getElementById('homeworkFeedContainer');
+  if (!container) return;
+
+  try {
+    const firestoreDb = window.db || firebase.firestore();
+    const snap = await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('homework').where('class', '==', targetClass).get();
+
+    const nowIso = new Date().toISOString();
+    let homeworkList = [];
+
+    snap.forEach(doc => {
+      const d = doc.data();
+      if (d.expireAt && d.expireAt > nowIso) {
+        homeworkList.push({ docId: doc.id, ...d });
+      }
+    });
+
+    if (!homeworkList.length) {
+      container.innerHTML = `<div class="empty">Is class ke liye abhi koi homework upload nahi kiya gaya hai. Aap upar form se naya homework upload kar sakte hain.</div>`;
+      return;
+    }
+
+    const isTeacherOrAdmin = (currentRole === 'admin' || currentRole === 'teacher');
+
+    container.innerHTML = homeworkList.map(h => `
+      <div style="border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 14px; background: #fafbfc;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div>
+            <span class="tag green">Class ${esc(h.class)}</span>
+            <span class="mini" style="margin-left: 8px;">Uploaded: ${esc(h.dateStr || '')}</span>
+          </div>
+          ${isTeacherOrAdmin ? `
+            <button class="btn red" style="padding: 5px 10px; font-size: 10px;" onclick="deleteHomework('${esc(h.docId)}', '${esc(targetClass)}')">🗑️ Delete Now</button>
+          ` : ''}
+        </div>
+        <div style="text-align: center; background: #000; border-radius: 8px; overflow: hidden;">
+          <a href="${esc(h.imageUrl)}" target="_blank">
+            <img src="${esc(h.imageUrl)}" alt="Homework" style="max-width: 100%; max-height: 400px; object-fit: contain; display: block; margin: auto;">
+          </a>
+        </div>
+        <div class="mini" style="margin-top: 6px; text-align: right;">By: ${esc(h.uploadedBy || 'Staff')}</div>
+      </div>
+    `).join('');
+
+  } catch (err) {
+    console.error('Load homework error:', err);
+    container.innerHTML = '<div class="empty">Homework load karne me error aayi.</div>';
+  }
+}
+
+async function deleteHomework(docId, targetClass) {
+  if (!confirm('Kya aap is homework photo ko delete karna chahte hain?')) return;
+  try {
+    toast('Deleting homework...');
+    const firestoreDb = window.db || firebase.firestore();
+    await firestoreDb.collection('schools').doc(window.RB_SCHOOL_ID).collection('homework').doc(docId).delete();
+    toast('✅ Homework deleted successfully!');
+    onTeacherClassSelect(targetClass);
+  } catch (err) {
+    console.error('Delete error:', err);
+    toast('Delete failed: ' + (err.message || 'Error'));
+  }
+}
+</script>
+</body>
+</html>

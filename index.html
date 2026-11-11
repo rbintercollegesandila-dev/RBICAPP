@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rambharose Inter College - Samadkheda, Meeton</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a2540;
+      --primary-gradient: linear-gradient(135deg, #0b1f3a 0%, #1e3a8a 50%, #2563eb 100%);
+      --accent: #f59e0b;
+      --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --bg-light: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-color: rgba(226, 232, 240, 0.8);
+      --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+    body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+    /* Top Strip */
+    .top-strip {
+      background: #06152b;
+      color: #94a3b8;
+      font-size: 13px;
+      padding: 10px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .top-strip-left span { margin-right: 24px; display: inline-flex; align-items: center; gap: 6px; }
+    .top-strip-right a { color: #f59e0b; text-decoration: none; font-weight: 600; }
+
+    /* Glass Navbar */
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .school-logo {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border-radius: 10px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    }
+    .brand-title h1 { font-size: 21px; font-weight: 800; color: #0a2540; letter-spacing: -0.3px; line-height: 1.2; }
+    .brand-title p { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; }
+
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { text-decoration: none; color: #334155; font-weight: 600; font-size: 14px; transition: color 0.2s; }
+    nav a:hover { color: #2563eb; }
+
+    .btn-portal {
+      background: var(--accent-gradient);
+      color: #ffffff !important;
+      padding: 11px 24px;
+      border-radius: 50px;
+      font-weight: 700 !important;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-portal:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.45); }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 110px 24px 150px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://thearchitectsdiary.com/wp-content/uploads/2025/03/Educational-buildings-17.png') center/cover;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      padding: 7px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      margin-bottom: 24px;
+      color: #fef3c7;
+    }
+    .hero h2 {
+      font-size: 44px;
+      font-weight: 800;
+      max-width: 920px;
+      margin: 0 auto 20px;
+      line-height: 1.22;
+      letter-spacing: -0.5px;
+    }
+    .hero p {
+      font-size: 18px;
+      max-width: 720px;
+      margin: 0 auto 40px;
+      color: #cbd5e1;
+      font-weight: 400;
+    }
+    .hero-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-hero-main {
+      background: white;
+      color: #0a2540;
+      padding: 15px 36px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+    .btn-hero-main:hover { transform: translateY(-2px); }
+    .btn-hero-alt {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      transition: background 0.2s;
+    }
+    .btn-hero-alt:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* Floating Stats Bar */
+    .stats-wrap { max-width: 1100px; margin: -65px auto 80px; padding: 0 24px; position: relative; z-index: 10; }
+    .stats-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+    .stat-box h3 { font-size: 34px; font-weight: 800; color: #1e3a8a; margin-bottom: 4px; }
+    .stat-box p { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Sections Common */
+    section { padding: 60px 24px 80px; max-width: 1200px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title span {
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .section-title h2 { font-size: 34px; font-weight: 800; color: #0a2540; letter-spacing: -0.5px; }
+    .section-title p { color: var(--text-muted); max-width: 620px; margin: 8px auto 0; font-size: 15px; }
+
+    /* Grid Cards */
+    .grid-three { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 28px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: #cbd5e1; }
+    .feature-icon {
+      width: 58px;
+      height: 58px;
+      background: #eff6ff;
+      color: #1e3a8a;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 22px;
+    }
+    .feature-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: #0a2540; }
+    .feature-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; }
+
+    /* Academic Box */
+    .academic-box {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Modern Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 22px;
+    }
+    .gallery-item {
+      position: relative;
+      height: 250px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      background: #e2e8f0;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.07); }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(10, 37, 64, 0.92) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      color: white;
+    }
+    .gallery-overlay b { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .gallery-overlay span { font-size: 12.5px; color: #94a3b8; }
+
+    /* Contact Card */
+    .contact-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      overflow: hidden;
+    }
+    .contact-sidebar {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .contact-sidebar h3 { font-size: 26px; font-weight: 800; margin-bottom: 14px; }
+    .contact-sidebar p { color: #cbd5e1; font-size: 14.5px; margin-bottom: 32px; }
+    .contact-info-item { display: flex; gap: 16px; margin-bottom: 22px; }
+    .contact-info-item span { font-size: 20px; }
+    .contact-info-item div b { display: block; font-size: 14px; }
+    .contact-info-item div p { margin: 0; color: #93c5fd; font-size: 13.5px; }
+
+    .contact-form-side { padding: 48px; }
+    .contact-form-side h3 { font-size: 22px; font-weight: 800; color: #0a2540; margin-bottom: 24px; }
+    .input-box { margin-bottom: 18px; }
+    .input-box label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #475569; margin-bottom: 6px; }
+    .input-box input, .input-box textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 14.5px;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .input-box input:focus, .input-box textarea:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+    .btn-send {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 15px;
+      transition: background 0.2s;
+    }
+    .btn-send:hover { background: #0f172a; }
+
+    /* Footer */
+    footer {
+      background: #06152b;
+      color: #94a3b8;
+      padding: 50px 24px 30px;
+      text-align: center;
+      font-size: 13.5px;
+    }
+    footer b { color: #f8fafc; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .contact-card { grid-template-columns: 1fr; }
+      header { padding: 14px 20px; flex-direction: column; gap: 16px; }
+      nav { flex-wrap: wrap; justify-content: center; gap: 16px; }
+      .hero h2 { font-size: 30px; }
+      .top-strip { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Strip -->
+  <div class="top-strip">
+    <div class="top-strip-left">
+      <span>📍 Samadkheda, Meeton, Uttar Pradesh</span>
+      <span>⏰ Mon - Sat: 08:00 AM - 02:00 PM</span>
+    </div>
+    <div class="top-strip-right">
+      <span>Helpline: <a href="tel:9876543210">+91 98765 43210</a></span>
+    </div>
+  </div>
+
+  <!-- Glassmorphism Header -->
+  <header>
+    <a href="#home" class="brand">
+      <img src="/logo.png" alt="Rambharose Inter College Logo" class="school-logo">
+      <div class="brand-title">
+        <h1>RAMBHAROSE INTER COLLEGE</h1>
+        <p>Affiliated to UP Board | Center for Academic Excellence</p>
+      </div>
+    </a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#academics">Academics</a>
+      <a href="#campus">Campus</a>
+      <a href="#contact">Contact</a>
+      <!-- Link directly connects to portal.html -->
+      <a href="portal.html" class="btn-portal">🔐 ERP Portal Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero" id="home">
+    <div class="hero-badge">
+      <span>✨ Admissions Open For Academic Session 2026-27</span>
+    </div>
+    <h2>Inspiring Minds, Building Character & Driving Excellence</h2>
+    <p>Empowering students through holistic education, state-of-the-art infrastructure, and dedicated faculty to shape tomorrow's leaders.</p>
+    <div class="hero-buttons">
+      <a href="portal.html" class="btn-hero-main">🚀 Student & Teacher Login</a>
+      <a href="#campus" class="btn-hero-alt">Explore Campus Facilities</a>
+    </div>
+  </div>
+
+  <!-- Floating Stats -->
+  <div class="stats-wrap">
+    <div class="stats-card">
+      <div class="stat-box">
+        <h3>2,000+</h3>
+        <p>Active Students</p>
+      </div>
+      <div class="stat-box">
+        <h3>40+</h3>
+        <p>Qualified Faculty</p>
+      </div>
+      <div class="stat-box">
+        <h3>100%</h3>
+        <p>UP Board Pass Rate</p>
+      </div>
+      <div class="stat-box">
+        <h3>Smart Cloud</h3>
+        <p>Digital Attendance & ERP</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="section-title">
+      <span>About Our College</span>
+      <h2>Key Pillars of Our Institution</h2>
+      <p>Committed to providing a nurturing environment where discipline meets modern education.</p>
+    </div>
+    <div class="grid-three">
+      <div class="feature-card">
+        <div class="feature-icon">👨‍🏫</div>
+        <h3>Distinguished Faculty</h3>
+        <p>Our experienced teachers employ modern pedagogical methods to ensure every student receives individual guidance and mentorship.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔬</div>
+        <h3>Modern Science Labs</h3>
+        <p>Well-equipped Physics, Chemistry, and Biology laboratories provide practical hands-on experience alongside a comprehensive library.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Smart Cloud & SMS ERP</h3>
+        <p>Parents receive real-time updates regarding daily student attendance, academic progress, and exam report cards directly on their mobile phones.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academics Section -->
+  <section id="academics">
+    <div class="academic-box">
+      <div class="section-title" style="margin-bottom: 36px;">
+        <span>Curriculum & Programs</span>
+        <h2>Academic Wings</h2>
+        <p>Structured learning path from primary education through intermediate board exams.</p>
+      </div>
+      <div class="grid-three">
+        <div class="feature-card" style="background: var(--bg-light);">
+          <h3>Primary Wing (Class 1-5)</h3>
+          <p>Laying strong foundations in literacy, numerical skills, and creative expression through engaging learning techniques.</p>
+        </div>
+        <div class="feature-card" style="background: var(--bg-light);">
+          <h3>Junior High (Class 6-8)</h3>
+          <p>Expanding scientific reasoning, social studies, and linguistic fluency coupled with early digital and computer training.</p>
+        </div>
+        <div class="feature-card" style="background: var(--bg-light);">
+          <h3>Senior Secondary (Class 9-12)</h3>
+          <p>Focused UP Board preparation across Science (PCM/PCB) and Humanities streams with regular test series and doubt-clearing sessions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Campus Life & Photos Gallery -->
+  <section id="campus">
+    <div class="section-title">
+      <span>Campus Life</span>
+      <h2>Campus & Infrastructure</h2>
+      <p>Modern classrooms, interactive digital learning, and expansive sports facilities.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://thearchitectsdiary.com/wp-content/uploads/2025/03/Educational-buildings-17.png" alt="Main School Campus">
+        <div class="gallery-overlay">
+          <b>Main School Building</b>
+          <span>Spacious, clean, and ventilated campus architecture</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://briotouch.com/wp-content/uploads/2026/06/interactive-flat-panel-for-learning.webp" alt="Smart Classrooms">
+        <div class="gallery-overlay">
+          <b>Interactive Classrooms</b>
+          <span>Modern flat panel displays and digital curriculum</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://acronis.org/wp-content/uploads/2024/08/3-Copy-1024x609.jpg" alt="Computer Lab">
+        <div class="gallery-overlay">
+          <b>Computer Science Lab</b>
+          <span>Hands-on computing and software fundamentals</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://th-i.thgim.com/public/incoming/5t0hrb/article67925937.ece/alternates/LANDSCAPE_1200/International_Womens_Day_Celebrations_10.jpg" alt="Sports and Playground">
+        <div class="gallery-overlay">
+          <b>Sports & Athletics</b>
+          <span>Encouraging physical fitness, teamwork, and athletic skills</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us -->
+  <section id="contact">
+    <div class="contact-card">
+      <div class="contact-sidebar">
+        <div>
+          <h3>Rambharose Inter College</h3>
+          <p>For admissions, certifications, or any administrative queries, feel free to visit or contact our office.</p>
+          
+          <div class="contact-info-item">
+            <span>📍</span>
+            <div>
+              <b>Campus Address:</b>
+              <p>Samadkheda, Meeton, Uttar Pradesh, India</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <span>📞</span>
+            <div>
+              <b>Phone Helpline:</b>
+              <p>+91 98765 43210 / 0522-XXXXXX</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <span>✉️</span>
+            <div>
+              <b>Official Email:</b>
+              <p>info@rbic.local / support@rbic.in</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; color: #bfdbfe; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 16px;">
+          ⏰ Office Hours: 08:00 AM - 02:00 PM (Monday to Saturday)
+        </div>
+      </div>
+
+      <div class="contact-form-side">
+        <h3>Send an Inquiry</h3>
+        <form onsubmit="event.preventDefault(); alert('Your message has been sent to the administration!'); this.reset();">
+          <div class="input-box">
+            <label>Full Name</label>
+            <input type="text" placeholder="Enter your full name..." required>
+          </div>
+          <div class="input-box">
+            <label>Mobile Number</label>
+            <input type="tel" placeholder="10-digit mobile number..." pattern="[0-9]{10}" required>
+          </div>
+          <div class="input-box">
+            <label>Message / Inquiry</label>
+            <textarea rows="4" placeholder="Type your query regarding admissions or academics..." required></textarea>
+          </div>
+          <button type="submit" class="btn-send">Submit Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p><b>Rambharose Inter College</b>, Samadkheda, Meeton</p>
+    <p style="margin-top: 6px; font-size: 12.5px;">© 2026 All Rights Reserved | Powered by RBIC Cloud ERP</p>
+  </footer>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then(function(registration) {
+        console.log('Service Worker registered successfully!');
+      }).catch(function(err) {
+        console.log('Service Worker registration failed:', err);
+      });
+  }
+</script>
+
+</body>
+</html>
