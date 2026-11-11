@@ -1,4 +1,3 @@
-
 name: Build RBICAPP Android APK
 
 on:
@@ -36,7 +35,7 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-            # Setup Android SDK
+      # 4. Setup Android SDK
       - name: Configure Android SDK
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
@@ -135,19 +134,14 @@ jobs:
         run: |
           npx cap sync android
 
-      # 12. Setup Android SDK Packages
-      - name: Install Android SDK Packages
-        run: |
-          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
-
-      # 13. Clean Gradle Cache
+      # 12. Clean Gradle Cache
       - name: Clean Gradle Cache
         run: |
           rm -rf ~/.gradle/caches
           rm -rf ~/.gradle/daemon
           rm -rf android/.gradle
 
-      # 14. Build APK
+      # 13. Build APK
       - name: Build Android APK
         working-directory: android
         run: |
@@ -160,7 +154,7 @@ jobs:
             --stacktrace \
             -Dorg.gradle.internal.instrumentation.agent=false
 
-      # 15. Verify APK
+      # 14. Verify APK
       - name: Verify APK
         run: |
           APK="android/app/build/outputs/apk/debug/app-debug.apk"
@@ -173,7 +167,7 @@ jobs:
           ls -lh "$APK"
           echo "RBICAPP APK BUILD SUCCESS"
 
-      # 16. Upload APK
+      # 15. Upload APK
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
